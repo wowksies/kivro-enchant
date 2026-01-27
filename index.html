@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kivro • Premium</title>
+    <meta name="description" content="Exclusive unblocked library.">
+
+    <!-- PWA Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Icons -->
+    <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        void: '#050505',
+                        panel: '#0f0f0f',
+                        accent: {
+                            DEFAULT: '#8b5cf6', // Violet 500
+                            glow: '#a78bfa',    // Violet 400
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'blob': 'blob 10s infinite',
+                        'fade-up': 'fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        body {
+            background-color: #050505;
+            color: #e4e4e7;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: none;
+            overflow-x: hidden;
+        }
+
+        /* --- LIQUID BACKGROUND --- */
+        .liquid-bg {
+            position: fixed; inset: 0; z-index: -2;
+            background: #000;
+            overflow: hidden;
+        }
+        
+        .blob-1, .blob-2, .blob-3 {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: blob 20s infinite alternate;
+        }
+        
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #4c1d95; } /* Deep Violet */
+        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #312e81; animation-delay: -5s; } /* Indigo */
+        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #701a75; animation-delay: -10s; opacity: 0.3; } /* Magenta */
+
+        /* --- SMOOTH CARDS --- */
+        .smooth-card {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 28px; /* Rounder */
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .smooth-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(40, 40, 40, 0.6);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 92, 246, 0.15);
+        }
+
+        .img-wrapper {
+            border-radius: 24px;
+            overflow: hidden;
+            mask-image: -webkit-radial-gradient(white, black);
+        }
+
+        /* --- UI ELEMENTS --- */
+        .nav-pill {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border-radius: 99px;
+            padding: 5px;
+            display: flex;
+            gap: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn {
+            padding: 10px 24px;
+            border-radius: 99px;
+            color: #a1a1aa;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.02em;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .nav-btn.active {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+        }
+        
+        .nav-btn:hover:not(.active) {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* --- MODALS --- */
+        .modal-surface {
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9);
+        }
+
+        /* --- INPUT --- */
+        .liquid-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .liquid-input:focus {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            outline: none;
+        }
+
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #4ade80; box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+        }
+
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+</head>
+<body class="antialiased selection:bg-violet-500/30 selection:text-white overflow-hidden" id="main-body">
+
+    <div class="liquid-bg">
+        <div class="blob-1"></div>
+        <div class="blob-2"></div>
+        <div class="blob-3"></div>
+    </div>
+
+    <!-- SITE LOCK / ACCESS CONTROL -->
+    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center transition-all duration-700">
+        <!-- Floating Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-[100px] animate-blob"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-[100px] animate-blob" style="animation-delay: -2s;"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-sm p-8 text-center animate-fade-up">
+            <div class="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-2xl border border-white/10 animate-float">
+                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 rounded-xl opacity-80">
+            </div>
+            
+            <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Kivro Enhanced</h1>
+            <p class="text-sm text-zinc-500 mb-8">Protected Environment</p>
+
+            <div class="relative group">
+                <input type="password" id="site-key-input" 
+                    class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-center text-white text-lg tracking-[0.5em] placeholder-zinc-700 focus:outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all shadow-lg"
+                    placeholder="KEY">
+                <div class="absolute inset-0 rounded-2xl ring-1 ring-white/20 group-hover:ring-violet-500/30 pointer-events-none transition-all"></div>
+            </div>
+
+            <div id="site-key-error" class="mt-4 text-red-400 text-xs font-bold opacity-0 transition-opacity">ACCESS DENIED</div>
+            
+            <button onclick="unlockSite()" class="mt-8 w-full py-4 rounded-2xl bg-white text-black font-bold text-sm hover:bg-violet-100 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                Initialize System
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER (Hidden initially) -->
+    <div id="app-content" class="opacity-0 scale-95 transition-all duration-700 blur-sm h-screen overflow-y-auto">
+
+        <!-- INSTALL PANEL -->
+        <div id="install-popup" class="fixed inset-0 z-[90] hidden bg-black/60 backdrop-blur-md flex items-end sm:items-center justify-center p-4">
+            <div id="install-sheet" class="w-full max-w-md modal-surface p-8 transform translate-y-20 opacity-0 transition-all duration-500">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex items-center gap-4">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-14 h-14 rounded-2xl shadow-lg">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Install App</h3>
+                            <p class="text-sm text-zinc-500">Add to Home Screen</p>
+                        </div>
+                    </div>
+                    <button id="close-install" class="p-2 rounded-full hover:bg-white/5 text-zinc-500 hover:text-white transition-colors">✕</button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div class="select-icon bg-white/5 border border-transparent p-4 rounded-3xl text-center cursor-pointer hover:bg-white/10 hover:scale-105 transition-all group" data-name="Teams" data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="w-10 h-10 mx-auto mb-3 rounded-xl shadow-sm">
+                        <span class="text-[10px] font-bold text-zinc-500 group-hover:text-white uppercase tracking-wide">Teams</span>
+                    </div>
+                    <div class="select-icon bg-white/5 border border-transparent p-4 rounded-3xl text-center cursor-pointer hover:bg-white/10 hover:scale-105 transition-all group" data-name="Kahoot!" data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="w-10 h-10 mx-auto mb-3 rounded-xl shadow-sm">
+                        <span class="text-[10px] font-bold text-zinc-500 group-hover:text-white uppercase tracking-wide">Kahoot</span>
+                    </div>
+                    <div class="select-icon bg-white/5 border border-transparent p-4 rounded-3xl text-center cursor-pointer hover:bg-white/10 hover:scale-105 transition-all group" data-name="Notes" data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-10 h-10 mx-auto mb-3 rounded-xl shadow-sm">
+                        <span class="text-[10px] font-bold text-zinc-500 group-hover:text-white uppercase tracking-wide">Notes</span>
+                    </div>
+                </div>
+                
+                <button class="w-full py-4 rounded-2xl bg-white/5 text-zinc-400 font-bold text-sm pointer-events-none">
+                    Tap Share → Add to Home Screen
+                </button>
+            </div>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div id="disclaimer-popup" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-xl flex items-center justify-center p-6">
+            <div class="w-full max-w-xs modal-surface p-8 text-center">
+                <div class="w-16 h-16 bg-violet-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-2xl text-violet-400">↗</span>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Leaving App</h3>
+                <p class="text-sm text-zinc-500 mb-8 leading-relaxed">You are being redirected to an external partner application.</p>
+                <button id="disclaimer-btn" class="w-full py-4 rounded-2xl bg-white/5 text-zinc-500 text-xs font-bold uppercase tracking-wider cursor-not-allowed">Redirecting...</button>
+            </div>
+        </div>
+
+        <!-- NAVBAR -->
+        <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+                
+                <div class="flex items-center gap-4 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg group-hover:scale-105 transition-transform duration-300">
+                </div>
+
+                <!-- Pill Nav -->
+                <div class="nav-pill hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
+                    <button class="nav-btn active" data-tab="Games">Library</button>
+                    <button class="nav-btn" data-tab="Apps">Apps</button>
+                    <button class="nav-btn" data-tab="Proxy">Proxy</button>
+                    <button class="nav-btn" data-tab="Favs">Saved</button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button id="search-toggle" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all backdrop-blur-md">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </button>
+                    
+                    <!-- Mobile Menu Trigger -->
+                    <div class="sm:hidden">
+                        <button class="bg-white/10 backdrop-blur-md text-white px-5 py-3 rounded-full text-sm font-bold" id="mobile-menu-trigger">Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden sm:hidden bg-black/90 backdrop-blur-2xl border-b border-white/5 p-4 absolute w-full left-0 top-24">
+                <div class="flex flex-col gap-2">
+                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Games">Library</button>
+                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Apps">Apps</button>
+                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Proxy">Proxy</button>
+                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Favs">Saved</button>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div id="search-bar" class="hidden absolute top-24 left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/5 p-6 transition-all">
+                <div class="max-w-3xl mx-auto">
+                    <input type="text" id="global-search" placeholder="Search..." class="liquid-input w-full py-5 px-8 text-white text-lg placeholder-zinc-500">
+                </div>
+            </div>
+        </nav>
+
+        <!-- CONTENT -->
+        <main class="pt-36 pb-12 px-4 max-w-7xl mx-auto min-h-screen">
+
+            <!-- DASHBOARD HEADER -->
+            <div class="text-center mb-16 fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-zinc-400 text-xs font-bold mb-6 backdrop-blur-md">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    Status: Operational
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl">Premium Library</h1>
+                <p class="text-zinc-400 font-medium text-lg">Secure access to <span id="item-count" class="text-white font-bold">0</span> exclusive applications.</p>
+                
+                <div class="flex justify-center gap-4 mt-8">
+                    <button id="install-trigger" class="px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-bold text-white transition-all backdrop-blur-md">Install App</button>
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank" class="px-8 py-4 rounded-full bg-white text-black hover:bg-violet-100 text-sm font-bold transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]">Request</a>
+                </div>
+            </div>
+
+            <!-- GRID -->
+            <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8">
+                <!-- Populated via JS -->
+            </div>
+
+        </main>
+
+        <footer class="py-12 text-center border-t border-white/5 mt-12 bg-black/20 backdrop-blur-md">
+            <p class="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">Kivro Enhanced v6.0 • Liquid Build</p>
+        </footer>
+
+        <!-- PANIC BUTTON -->
+        <a href="https://member.foodvillage.ie/login" class="fixed bottom-8 right-8 z-40 w-16 h-16 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/40 flex items-center justify-center text-red-500 hover:text-red-400 transition-all rounded-3xl backdrop-blur-md shadow-2xl group hover:scale-110 active:scale-95">
+            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        </a>
+    
+    </div> <!-- End App Content -->
+
+    <script>
+        // CONFIG
+        const SITE_KEY = "88888888";
+        const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
+        const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
+        let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
+        let currentTab = 'Games';
+
+        // DATA
+        const gamesList = [
+            { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library.onrender.com//2048/index.html" },
+            { id: 7, title: "BTD4", category: "Strategy", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library.onrender.com//btd4/index.html" },
+            { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp", gameUrl: "https://kivro-game-library.onrender.com//bitlife/index.html" },
+            { id: 8, title: "Chess", category: "Strategy", imgUrl: THUMB_BASE + "chess.jpg", gameUrl: GITHUB_BASE + "chess/index.html" },
+            { id: 9, title: "Cookie Clicker", category: "Clicker", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg", gameUrl: GITHUB_BASE + "cookieclicker/index.html" },
+            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg", gameUrl: "https://kivro-game-library.onrender.com//drivemad/index.html" },
+            { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg", gameUrl: "https://kivro-game-library.onrender.com//flappybird/index.html" },
+            { id: 3, title: "Geo Dash", category: "Rhythm", imgUrl: THUMB_BASE + "Geometry-Dash.webp", gameUrl: "https://geometryite.vercel.app/" },
+            { id: 15, title: "Google Snake", category: "Arcade", imgUrl: THUMB_BASE + "Google-Snake.jpg", gameUrl: "https://raw.githack.com/KAYAZzz/kivro-library/main/Snake/index.html" },
+            { id: 11, title: "Monkey Mart", category: "Simulation", imgUrl: THUMB_BASE + "Monkey-Mart.jpg", gameUrl: "https://kivro-game-library.onrender.com//monkeymart/index.html" },
+            { id: 12, title: "PacMan", category: "Arcade", imgUrl: THUMB_BASE + "Pacman.jpg", gameUrl: GITHUB_BASE + "pacman/index.html" },
+            { id: 1, title: "Retro Bowl", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp", gameUrl: GITHUB_BASE + "retrobowl/index.html" },
+            { id: 14, title: "Slope", category: "Runner", imgUrl: THUMB_BASE + "slope.png", gameUrl: "https://kivro-game-library.onrender.com//Slope/index.html" },
+            { id: 16, title: "Snow Battle", category: "Action", imgUrl: THUMB_BASE + "Snow-Battle.png", gameUrl: GITHUB_BASE + "snowbattle/index.html" },
+            { id: 17, title: "Stack", category: "Puzzle", imgUrl: THUMB_BASE + "Stack.webp", gameUrl: GITHUB_BASE + "stack/index.html" },
+            { id: 4, title: "Drift Boss", category: "Racing", imgUrl: THUMB_BASE + "Drift1.jpg", gameUrl: "https://kivro-game-library.onrender.com//DriftBoss/index.html" },
+            { id: 18, title: "Subway Surfers", category: "Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html" },
+            { id: 19, title: "Baldi's Basics", category: "Horror", imgUrl: THUMB_BASE + "BaldisBasics.webp", gameUrl: GITHUB_BASE + "baldisbasics/index.html" },
+            { id: 20, title: "Dino Runner", category: "Arcade", imgUrl: THUMB_BASE + "Dino.jpg", gameUrl: "https://kivro-game-library.onrender.com//chromedino/index.html" },
+            { id: 21, title: "Stickman Hook", category: "Action", imgUrl: THUMB_BASE + "stickman-hook.png", gameUrl: "https://kivro-game-library.onrender.com//StickmanHook/index.html" },
+            { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg", gameUrl: "https://kivro-game-library.onrender.com//blockblast/index.html" },
+            { id: 24, title: "Merge Rot", category: "Puzzle", imgUrl: THUMB_BASE + "merge-rot.png", gameUrl: "https://kivro-game-library.onrender.com//MergeRot/index.html" },
+            { id: 25, title: "Hole.io", category: "Action", imgUrl: THUMB_BASE + "Hole.png", gameUrl: "https://kivro-game-library.onrender.com//HoleIO/index.html" },
+            { id: 26, title: "Sausage Flip", category: "Fun", imgUrl: THUMB_BASE + "sausage-flip.png", gameUrl: "https://kivro-game-library.onrender.com//sausage-flip/index.html" },
+            { id: 27, title: "YoHoHo.io", category: "IO", imgUrl: THUMB_BASE + "Yohoho.jpg", gameUrl: "https://kivro-game-library.onrender.com/yohohoio/index.html" },
+            { id: 28, title: "Mr.Bullet", category: "Puzzle", imgUrl: THUMB_BASE + "Bullet.jpg", gameUrl: "https://kivro-game-library.onrender.com//MrBullet/index.html" },
+            { id: 29, title: "Impossible Quiz", category: "Puzzle", imgUrl: THUMB_BASE + "Impossible.png", gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html" },
+            { id: 30, title: "Paper.io", category: "IO", imgUrl: THUMB_BASE + "paper-io.png", gameUrl: GITHUB_BASE + "paperio/index.html" },
+            { id: 31, title: "Hill Climb", category: "Racing", imgUrl: THUMB_BASE + "HillClimb.png", gameUrl: "https://kivro-game-library.onrender.com//HillClimbRacing/index.html" },
+            { id: 34, title: "Bottle Flip", category: "Skill", imgUrl: THUMB_BASE + "bottleflip.png", gameUrl: "https://kivro-game-library.onrender.com//BottleFlip2/index.html" },
+            { id: 35, title: "Penalty Kicks", category: "Sports", imgUrl: THUMB_BASE + "penalty.jpg", gameUrl: "https://kivro-game-library.onrender.com//PenaltyKicks/index.html" },
+            { id: 36, title: "Gun Spin", category: "Action", imgUrl: THUMB_BASE + "gunspin.png", gameUrl: "https://kivro-game-library.onrender.com//Gunspin/index.html" },
+            { id: 37, title: "SandBoxel", category: "Simulation", imgUrl: THUMB_BASE + "Sandboxel.png", gameUrl: "https://raw.githack.com/R74nCom/sandboxels/main/index.html" },
+            { id: 38, title: "Ballistic", category: "Puzzle", imgUrl: THUMB_BASE + "ballistic.png", gameUrl: "https://kivro-game-library.onrender.com//Ballistic/index.html" },
+            { id: 39, title: "Stacktris", category: "Puzzle", imgUrl: THUMB_BASE + "stacktris.jpeg", gameUrl: "https://kivro-game-library.onrender.com//stacktris/index.html" },
+            { id: 40, title: "Tomb of Mask", category: "Action", imgUrl: THUMB_BASE + "TofM.jpg", gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html" },
+            { id: 41, title: "Paper Plane", category: "Fun", imgUrl: THUMB_BASE + "Planef.jpg", gameUrl: "https://kivro-game-library.onrender.com//PaperFlight1/index.html" },
+            { id: 42, title: "Curve Rush", category: "Action", imgUrl: THUMB_BASE + "curve-rush.webp", gameUrl: "https://curverush.com/curve-rush.embed" },
+            { id: 43, title: "Burrito Bison", category: "Action", imgUrl: THUMB_BASE + "Bb.png", gameUrl: "https://burrito-bison-cnm.vercel.app/" },
+            { id: 43, title: "Golf Orbit", category: "Sports", imgUrl: THUMB_BASE + "golf-orbit.png", gameUrl: "https://golf-orbit-k8ue.vercel.app/" },
+            { id: 44, title: "Ragdoll Archers", category: "Action", imgUrl: THUMB_BASE + "ragdoll-archers.jpg", gameUrl: "https://kivro-game-library.onrender.com//Ragdoll-Archers/index.html" },
+            { id: 45, title: "Helix Jump", category: "Arcade", imgUrl: THUMB_BASE + "HelixJ.webp", gameUrl: "https://kivro-game-library.onrender.com//helixjump/index.html" },
+            { id: 46, title: "PolyTrack", category: "Racing", imgUrl: THUMB_BASE + "Polyt.webp", gameUrl: "https://raw.githack.com/AnonymousBirb5100/polytrack/main/index.html" },
+            { id: 47, title: "Gobble", category: "Fun", imgUrl: THUMB_BASE + "Gobble.png", gameUrl: "https://kivro-game-library.onrender.com//Gobble/gobble/index.html" },
+            { id: 48, title: "Swingo", category: "Fun", imgUrl: THUMB_BASE + "swingo.jpg", gameUrl: "https://kivro-game-library.onrender.com//Swingo/index.html" },
+            { id: 49, title: "Spiral Roll", category: "Fun", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library.onrender.com//spralr/index.html" },
+            { id: 50, title: "Wordle", category: "Word", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
+            { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/" },
+            { id: 53, title: "Game In Game", category: "Meta", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library.onrender.com//game-inside/index.html" },
+            { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
+            { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library.onrender.com//raft-war/index.html" },
+            { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg", gameUrl: "https://kivro-game-library.onrender.com//a-smallwc/index.html" },
+            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png", gameUrl: "https://wowksies-github-io.onrender.com//bowmasters/index.html" },
+            { id: 58, title: "State.io", category: "Strategy", imgUrl: THUMB_BASE + "IMG_0862.png", gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html" },
+            { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg", gameUrl: "https://kivro-game-library.onrender.com//DayOfMeat/index.html" },
+            { id: 60, title: "Knife Hit", category: "Skill", imgUrl: THUMB_BASE + "Knifehit.png", gameUrl: "https://kivro-game-library.onrender.com//knifehit/index.html" },
+            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png", gameUrl: "https://wowksies-github-io.onrender.com//solar-smash/index.html" },
+            { id: 62, title: "Bridge Race", category: "Fun", imgUrl: THUMB_BASE + "IMG_0870.jpeg", gameUrl: "https://wowksies-github-io.onrender.com//bridge-race/index.html" },
+            { id: 63, title: "Papa's Pizzeria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp", gameUrl: "https://kivro-game-library.onrender.com//papsp/index.html" },
+            { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png", gameUrl: "https://kivro-game-library.onrender.com//little-alchemy/index.html" },
+            { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp", gameUrl: "https://kivro-game-library.onrender.com//pool-pixijs/index.html" },
+            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg", gameUrl: "https://wowksies-github-io.onrender.com//stealth-master/index.html" },
+            { id: 67, title: "Hide and Seek", category: "Fun", imgUrl: THUMB_BASE + "hideandseek.webp", gameUrl: "https://kivro-game-library.onrender.com//hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html" },
+            { id: 68, title: "Slice it All", category: "Fun", imgUrl: THUMB_BASE + "sliceitall.png", gameUrl: "https://wowksies-github-io.onrender.com//slice-it-all/index.html" },
+            { id: 69, title: "Bus Out", category: "Puzzle", imgUrl: THUMB_BASE + "busout.webp", gameUrl: "https://gamesbun.github.io/busout-school/" },
+            { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp", gameUrl: "https://kivro-game-library.onrender.com//blumgir/index.html" },
+            { id: 71, title: "Hills Of Steel", category: "Action", imgUrl: THUMB_BASE + "hills%20of%20steel.webp", gameUrl: "https://hillofsteele.vercel.app/" },
+            { id: 72, title: "Rooftop Snipers", category: "Action", imgUrl: THUMB_BASE + "rooftop-snipers.webp", gameUrl: "https://kivro-game-library.onrender.com//rooftopsnipers/index.html" },
+            { id: 73, title: "Blumgi Ball", category: "Sports", imgUrl: THUMB_BASE + "blumgiball.webp", gameUrl: "https://kivro-game-library.onrender.com//blumgiball/index.html" },
+            { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png", gameUrl: "https://kivro-game-library.onrender.com//DrawJoustindex.html" },
+            { id: 78, title: "Basket Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://kivro-game-library.onrender.com//basketball-legends-main/index.html" },
+            { id: 79, title: "Soccer Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://kivro-game-library.onrender.com//football-legends/index.html" },
+            { id: 76, title: "Crossy Road", category: "Fun", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies-github-io.onrender.com//crossy-road/index.html" },
+            { id: 77, title: "Getaway Shoot", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://kivro-game-library.onrender.com/getaway-shootout/index.html" }
+        ];
+
+        const appsList = [
+            { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
+        ];
+
+        // SITE LOCK LOGIC
+        function unlockSite() {
+            const input = document.getElementById('site-key-input');
+            const error = document.getElementById('site-key-error');
+            const lockScreen = document.getElementById('site-lock');
+            const appContent = document.getElementById('app-content');
+            const body = document.getElementById('main-body');
+
+            if (input.value === SITE_KEY) {
+                // Success
+                lockScreen.style.opacity = '0';
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    appContent.classList.remove('opacity-0', 'scale-95', 'blur-sm');
+                    body.classList.remove('overflow-hidden');
+                    init(); // Initialize app
+                }, 500);
+            } else {
+                // Error
+                error.classList.remove('opacity-0');
+                input.value = '';
+                input.focus();
+                setTimeout(() => error.classList.add('opacity-0'), 2000);
+            }
+        }
+
+        document.getElementById('site-key-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') unlockSite();
+        });
+
+        // CORE APP LOGIC
+        function init() {
+            renderGrid(gamesList);
+            updateCount();
+            setupTabs();
+            setupSearch();
+            setupInstall();
+
+            // Splash removal happens after unlock now
+            const splash = document.getElementById('splash-screen');
+            if(splash) {
+                 splash.style.opacity = '0';
+                 setTimeout(() => splash.style.display = 'none', 500);
+            }
+        }
+
+        function renderGrid(items) {
+            const grid = document.getElementById('game-grid');
+            grid.innerHTML = '';
+            
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-20 text-center text-zinc-600 font-bold text-sm uppercase tracking-wider">No Results Found</div>`;
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = "smooth-card group cursor-pointer animate-fade-up";
+                card.style.animationDelay = `${index * 40}ms`;
+
+                card.onclick = () => {
+                    if(item.id === 1001) openDisclaimer(item.gameUrl);
+                    else window.open(item.gameUrl, '_blank');
+                };
+
+                card.innerHTML = `
+                    <div class="h-36 sm:h-40 relative img-wrapper bg-black/50 m-2">
+                        <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x250/111/444?text=NULL'">
+                        
+                        <div class="absolute top-2 right-2 flex gap-1">
+                             <div class="bg-black/40 backdrop-blur-md px-2 py-1 rounded-full text-[10px] font-bold text-white/80 group-hover:text-white transition-colors border border-white/5">V1.0</div>
+                        </div>
+
+                        <div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
+                            <div class="status-dot"></div>
+                            <span class="text-[10px] font-bold text-white/90">Ready</span>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-2 flex justify-between items-start">
+                        <div>
+                            <h3 class="text-sm font-bold text-zinc-100 group-hover:text-violet-300 transition-colors truncate max-w-[120px]">${item.title}</h3>
+                            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-wide mt-0.5">${item.category}</p>
+                        </div>
+                        <button onclick="toggleFav(event, ${item.id})" class="text-zinc-600 hover:text-yellow-400 transition-colors ${isFav ? 'text-yellow-400' : ''}">
+                            <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // TABS
+        function setupTabs() {
+            const btns = document.querySelectorAll('.nav-btn');
+            
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => handleTabSwitch(btn));
+            });
+
+            const mobileTrigger = document.getElementById('mobile-menu-trigger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileTrigger) {
+                mobileTrigger.onclick = () => {
+                    mobileMenu.classList.toggle('hidden');
+                };
+            }
+        }
+
+        function handleTabSwitch(btn) {
+            const tab = btn.dataset.tab;
+            if(!tab) return;
+
+            if(tab === 'Proxy') {
+                // OPEN PROXY DIRECTLY NOW (NO PASSWORD)
+                window.open('https://kivroprox1.vercel.app/', '_blank');
+                return;
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`.nav-btn[data-tab="${tab}"]`).forEach(b => b.classList.add('active'));
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            currentTab = tab;
+            filterGrid();
+        }
+
+        // SEARCH
+        function setupSearch() {
+            const toggle = document.getElementById('search-toggle');
+            const bar = document.getElementById('search-bar');
+            const input = document.getElementById('global-search');
+
+            toggle.onclick = () => {
+                bar.classList.toggle('hidden');
+                if(!bar.classList.contains('hidden')) input.focus();
+            };
+            input.oninput = (e) => filterGrid(e.target.value);
+        }
+
+        function filterGrid(term = '') {
+            const s = term.toLowerCase();
+            const all = [...gamesList, ...appsList];
+            
+            const filtered = all.filter(item => {
+                if(!item.title.toLowerCase().includes(s)) return false;
+                if(currentTab === 'Favs') return favorites.includes(item.id);
+                if(currentTab === 'Apps') return item.category === 'App';
+                return item.category !== 'App';
+            });
+
+            if(currentTab === 'Games' && !term) {
+                filtered.sort((a,b) => (favorites.includes(b.id) ? 1 : 0) - (favorites.includes(a.id) ? 1 : 0));
+            }
+
+            renderGrid(filtered);
+            updateCount(filtered.length);
+        }
+
+        function updateCount(n) {
+            const c = n !== undefined ? n : gamesList.length + appsList.length;
+            document.getElementById('item-count').innerText = c;
+        }
+
+        window.toggleFav = (e, id) => {
+            e.stopPropagation();
+            if(favorites.includes(id)) favorites = favorites.filter(x => x !== id);
+            else favorites.push(id);
+            localStorage.setItem('kivro_favs', JSON.stringify(favorites));
+            
+            if(currentTab === 'Favs') {
+                filterGrid();
+            } else {
+                const btn = e.currentTarget;
+                const svg = btn.querySelector('svg');
+                if(favorites.includes(id)) {
+                    btn.classList.add('text-yellow-400');
+                    svg.setAttribute('fill', 'currentColor');
+                } else {
+                    btn.classList.remove('text-yellow-400');
+                    svg.setAttribute('fill', 'none');
+                }
+            }
+        };
+
+        // INSTALL
+        function setupInstall() {
+            const m = document.getElementById('install-popup');
+            const inner = document.getElementById('install-sheet');
+            
+            document.getElementById('install-trigger').onclick = () => {
+                m.classList.remove('hidden');
+                setTimeout(() => { m.classList.remove('opacity-0'); inner.classList.remove('translate-y-20', 'opacity-0'); }, 10);
+            };
+
+            document.getElementById('close-install').onclick = () => {
+                m.classList.add('opacity-0');
+                inner.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => m.classList.add('hidden'), 500);
+            };
+
+            document.querySelectorAll('.select-icon').forEach(el => {
+                el.onclick = () => {
+                    document.querySelectorAll('.select-icon').forEach(x => {
+                        x.classList.remove('bg-white/10', 'scale-105');
+                        x.classList.add('bg-white/5');
+                        x.querySelector('span').classList.remove('text-white');
+                    });
+                    el.classList.remove('bg-white/5');
+                    el.classList.add('bg-white/10', 'scale-105');
+                    el.querySelector('span').classList.add('text-white');
+                    
+                    document.getElementById('apple-touch-icon').href = el.dataset.icon;
+                    document.title = el.dataset.name;
+                }
+            });
+        }
+
+        let discInterval;
+        function openDisclaimer(url) {
+            const m = document.getElementById('disclaimer-popup');
+            const btn = document.getElementById('disclaimer-btn');
+            m.classList.remove('hidden');
+            
+            let t = 3;
+            btn.innerText = `Redirecting in ${t}s...`;
+            
+            clearInterval(discInterval);
+            discInterval = setInterval(() => {
+                t--;
+                btn.innerText = `Redirecting in ${t}s...`;
+                if(t <= 0) {
+                    clearInterval(discInterval);
+                    window.open(url, '_blank');
+                    m.classList.add('hidden');
+                }
+            }, 1000);
+        }
+
+        // Init handled by unlockSite now, unless already unlocked (logic simplification: always lock on reload for security demo)
+        // window.onload = init; 
+    </script>
+</body>
+</html>
