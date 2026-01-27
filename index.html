@@ -358,16 +358,6 @@
         let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
         let currentTab = 'Games';
 
-        // CHECK SESSION (PERSISTENCE)
-        const hasAccess = localStorage.getItem('kivro_access_v1');
-        if(hasAccess) {
-             const lock = document.getElementById('site-lock');
-             if(lock) lock.style.display = 'none';
-             document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
-             document.getElementById('main-body').classList.remove('overflow-hidden');
-             // We'll call init() after DOM load below
-        }
-
         // DATA
         const gamesList = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//2048/index.html" },
@@ -423,18 +413,18 @@
             { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
             { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//raft-war/index.html" },
             { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//a-smallwc/index.html" },
-            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///bowmasters/index.html" },
+            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png", gameUrl: "https://wowksies-github-io.onrender.com//bowmasters/index.html" },
             { id: 58, title: "State.io", category: "Strategy", imgUrl: THUMB_BASE + "IMG_0862.png", gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html" },
             { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//DayOfMeat/index.html" },
             { id: 60, title: "Knife Hit", category: "Skill", imgUrl: THUMB_BASE + "Knifehit.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//knifehit/index.html" },
-            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///solar-smash/index.html" },
-            { id: 62, title: "Bridge Race", category: "Fun", imgUrl: THUMB_BASE + "IMG_0870.jpeg", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///bridge-race/index.html" },
+            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png", gameUrl: "https://wowksies-github-io.onrender.com//solar-smash/index.html" },
+            { id: 62, title: "Bridge Race", category: "Fun", imgUrl: THUMB_BASE + "IMG_0870.jpeg", gameUrl: "https://wowksies-github-io.onrender.com//bridge-race/index.html" },
             { id: 63, title: "Papa's Pizzeria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//papsp/index.html" },
             { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//little-alchemy/index.html" },
             { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//pool-pixijs/index.html" },
-            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///stealth-master/index.html" },
+            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg", gameUrl: "https://wowksies-github-io.onrender.com//stealth-master/index.html" },
             { id: 67, title: "Hide and Seek", category: "Fun", imgUrl: THUMB_BASE + "hideandseek.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html" },
-            { id: 68, title: "Slice it All", category: "Fun", imgUrl: THUMB_BASE + "sliceitall.png", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///slice-it-all/index.html" },
+            { id: 68, title: "Slice it All", category: "Fun", imgUrl: THUMB_BASE + "sliceitall.png", gameUrl: "https://wowksies-github-io.onrender.com//slice-it-all/index.html" },
             { id: 69, title: "Bus Out", category: "Puzzle", imgUrl: THUMB_BASE + "busout.webp", gameUrl: "https://gamesbun.github.io/busout-school/" },
             { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//blumgir/index.html" },
             { id: 71, title: "Hills Of Steel", category: "Action", imgUrl: THUMB_BASE + "hills%20of%20steel.webp", gameUrl: "https://hillofsteele.vercel.app/" },
@@ -443,7 +433,7 @@
             { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//DrawJoustindex.html" },
             { id: 78, title: "Basket Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//basketball-legends-main/index.html" },
             { id: 79, title: "Soccer Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//football-legends/index.html" },
-            { id: 76, title: "Crossy Road", category: "Fun", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///crossy-road/index.html" },
+            { id: 76, title: "Crossy Road", category: "Fun", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies-github-io.onrender.com//crossy-road/index.html" },
             { id: 77, title: "Getaway Shoot", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io/getaway-shootout/index.html" }
         ];
 
@@ -605,7 +595,7 @@
 
             if(tab === 'Proxy') {
                 // OPEN PROXY DIRECTLY NOW (NO PASSWORD)
-                window.open('https://kivroprox1-336af4.gitlab.io/', '_blank');
+                window.open('https://kivroprox1.vercel.app/', '_blank');
                 return;
             }
 
@@ -729,8 +719,20 @@
             }, 1000);
         }
 
-        // Init handled by unlockSite now, unless already unlocked (logic simplification: always lock on reload for security demo)
-        // window.onload = init; 
+        // CHECK SESSION (PERSISTENCE) - MOVED TO END
+        const hasAccess = localStorage.getItem('kivro_access_v1');
+        if(hasAccess) {
+             const lock = document.getElementById('site-lock');
+             if(lock) {
+                 lock.style.display = 'none';
+                 lock.style.opacity = '0';
+             }
+             document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
+             document.getElementById('main-body').classList.remove('overflow-hidden');
+             
+             // Initialize the app immediately
+             init();
+        }
     </script>
 </body>
 </html>
