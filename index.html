@@ -352,11 +352,21 @@
 
     <script>
         // CONFIG
-        const SITE_KEY = "88888888";
+        const API_URL = "https://script.google.com/macros/s/AKfycbyxidAroQ6-d_EGj8qxAeHt0qvmDga9Bs7jqMoWFz7_3qYeM_RbP37uPO_0W2zqcD6n/exec";
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
         let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
         let currentTab = 'Games';
+
+        // CHECK SESSION (PERSISTENCE)
+        const hasAccess = localStorage.getItem('kivro_access_v1');
+        if(hasAccess) {
+             const lock = document.getElementById('site-lock');
+             if(lock) lock.style.display = 'none';
+             document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
+             document.getElementById('main-body').classList.remove('overflow-hidden');
+             // We'll call init() after DOM load below
+        }
 
         // DATA
         const gamesList = [
@@ -442,28 +452,66 @@
         ];
 
         // SITE LOCK LOGIC
-        function unlockSite() {
+        async function unlockSite() {
             const input = document.getElementById('site-key-input');
             const error = document.getElementById('site-key-error');
             const lockScreen = document.getElementById('site-lock');
             const appContent = document.getElementById('app-content');
             const body = document.getElementById('main-body');
+            const btn = document.querySelector('#site-lock button');
 
-            if (input.value === SITE_KEY) {
-                // Success
-                lockScreen.style.opacity = '0';
-                setTimeout(() => {
-                    lockScreen.style.display = 'none';
-                    appContent.classList.remove('opacity-0', 'scale-95', 'blur-sm');
-                    body.classList.remove('overflow-hidden');
-                    init(); // Initialize app
-                }, 500);
-            } else {
-                // Error
+            // 1. Get and clean the key
+            const key = input.value.trim();
+
+            // 2. Prevent sending empty requests (Fixes "No key provided")
+            if (!key) {
+                showError("ENTER A KEY");
+                return;
+            }
+
+            // Feedback: Loading State
+            const originalText = btn.innerText;
+            btn.innerText = "VERIFYING...";
+            btn.disabled = true;
+            input.disabled = true;
+
+            try {
+                // CALL THE BACKEND (GOOGLE APPS SCRIPT)
+                const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}`);
+                const data = await response.json();
+
+                if (data.valid) {
+                    // SUCCESS: Access Granted
+                    localStorage.setItem('kivro_access_v1', 'granted'); // PERSISTENCE
+                    
+                    lockScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        lockScreen.style.display = 'none';
+                        appContent.classList.remove('opacity-0', 'scale-95', 'blur-sm');
+                        body.classList.remove('overflow-hidden');
+                        init(); // Load content
+                    }, 500);
+                } else {
+                    // FAIL: Invalid or Used Key
+                    showError(data.message || "ACCESS DENIED");
+                }
+            } catch (err) {
+                // ERROR: Network/Server issue
+                showError("CONNECTION ERROR");
+                console.error(err);
+            } finally {
+                // Reset UI
+                btn.innerText = originalText;
+                btn.disabled = false;
+                input.disabled = false;
+                if(lockScreen.style.display !== 'none') input.focus();
+            }
+
+            function showError(msg) {
+                error.innerText = msg;
                 error.classList.remove('opacity-0');
-                input.value = '';
-                input.focus();
-                setTimeout(() => error.classList.add('opacity-0'), 2000);
+                // Don't clear input instantly so user can fix typo
+                setTimeout(() => error.classList.add('opacity-0'), 3000);
             }
         }
 
@@ -479,7 +527,7 @@
             setupSearch();
             setupInstall();
 
-            // Splash removal happens after unlock now
+            // Remove splash if still visible (unlikely in new flow, but safe to keep)
             const splash = document.getElementById('splash-screen');
             if(splash) {
                  splash.style.opacity = '0';
@@ -557,7 +605,7 @@
 
             if(tab === 'Proxy') {
                 // OPEN PROXY DIRECTLY NOW (NO PASSWORD)
-                window.open('https://kivroprox1.vercel.app/', '_blank');
+                window.open('https://kivroprox1-336af4.gitlab.io/', '_blank');
                 return;
             }
 
