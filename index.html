@@ -488,7 +488,8 @@
                 type: 'preview',
                 expiresAt: Date.now() + 3600000 // 1 hour dummy session for state
             };
-            localStorage.setItem('kivro_preview_session', JSON.stringify(session));
+            // Do NOT save to localStorage so refresh resets to lock screen
+            // localStorage.setItem('kivro_preview_session', JSON.stringify(session));
             enterSystem(session);
         }
 
@@ -835,17 +836,8 @@
 
         // --- SESSION RESUME ---
         window.onload = () => {
-            // Check for Preview session first
-            const previewSession = JSON.parse(localStorage.getItem('kivro_preview_session'));
-            if(previewSession) {
-                 // Check expiry (1 hour dummy) just for good measure
-                 if (Date.now() < previewSession.expiresAt) {
-                     enterSystem(previewSession);
-                     return;
-                 } else {
-                     localStorage.removeItem('kivro_preview_session');
-                 }
-            }
+            // REMOVE EXISTING PREVIEW SESSION IF ANY
+            localStorage.removeItem('kivro_preview_session');
 
             // Check for Premium session
             const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
