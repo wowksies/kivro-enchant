@@ -167,6 +167,15 @@
         }
 
         ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* Notification Toast */
+        #toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(139, 92, 246, 0.9); backdrop-filter: blur(10px);
+            padding: 12px 24px; border-radius: 12px; color: white; font-weight: bold; font-size: 14px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 99999;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body class="antialiased selection:bg-violet-500/30 selection:text-white overflow-hidden" id="main-body">
@@ -238,6 +247,7 @@
                 <div class="nav-pill hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
                     <button class="nav-btn active" data-tab="Games">Library</button>
                     <button class="nav-btn" data-tab="Apps">Apps</button>
+                    <button class="nav-btn" data-tab="Menu">Menu</button>
                     <button class="nav-btn" data-tab="Proxy">Proxy</button>
                     <button class="nav-btn" data-tab="Favs">Saved</button>
                 </div>
@@ -250,6 +260,21 @@
                     <button id="search-toggle" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-zinc-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </button>
+                    
+                    <div class="sm:hidden">
+                        <button class="bg-white/10 backdrop-blur-md text-white px-5 py-3 rounded-full text-sm font-bold" id="mobile-menu-trigger">Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden sm:hidden bg-black/90 backdrop-blur-2xl border-b border-white/5 p-4 absolute w-full left-0 top-24">
+                <div class="flex flex-col gap-2">
+                    <button class="nav-btn text-center w-full py-4" data-tab="Games">Library</button>
+                    <button class="nav-btn text-center w-full py-4" data-tab="Apps">Apps</button>
+                    <button class="nav-btn text-center w-full py-4" data-tab="Menu">Kivro Menu</button>
+                    <button class="nav-btn text-center w-full py-4" data-tab="Proxy">Proxy</button>
+                    <button class="nav-btn text-center w-full py-4" data-tab="Favs">Saved</button>
                 </div>
             </div>
 
@@ -261,7 +286,8 @@
         </nav>
 
         <main class="pt-36 pb-12 px-4 max-w-7xl mx-auto min-h-screen">
-            <div class="text-center mb-16 fade-up">
+            <!-- DASHBOARD HEADER -->
+            <div id="dashboard-header" class="text-center mb-16 fade-up">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-zinc-400 text-[10px] font-bold mb-6">
                     <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                     Status: System Secure
@@ -270,9 +296,59 @@
                 <p class="text-zinc-400 font-medium text-lg">Accessing <span id="item-count" class="text-white font-bold">0</span> applications.</p>
             </div>
 
+            <!-- GRID -->
             <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8"></div>
+
+            <!-- DEDICATED MENU PAGE -->
+            <div id="menu-view" class="hidden max-w-2xl mx-auto animate-fade-up">
+                <div class="text-center mb-12">
+                    <div class="w-24 h-24 bg-violet-500/10 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 opacity-80">
+                    </div>
+                    <h2 class="text-4xl font-extrabold text-white mb-4">Kivro Menu V2</h2>
+                    <p class="text-zinc-400">The ultimate utility belt for your browser sessions.</p>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 mb-8 backdrop-blur-sm relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10 text-center">
+                        <h3 class="text-lg font-bold text-white mb-2">Installation Script</h3>
+                        <p class="text-xs text-zinc-500 mb-6 uppercase tracking-widest">Universal Bookmarklet</p>
+                        
+                        <button onclick="copyBookmarklet()" class="w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-violet-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            Tap to Copy Code
+                        </button>
+                        <p class="mt-4 text-[10px] text-zinc-600">Auto-updating script • No installation required</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-zinc-500 uppercase tracking-widest pl-2">iPad / iPhone Setup</h3>
+                    
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">1</span>
+                        <p class="text-sm text-zinc-400">Tap <b class="text-white">Copy Code</b> above.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">2</span>
+                        <p class="text-sm text-zinc-400">Tap <b class="text-white">Share</b> (Square Arrow) → <b class="text-white">Add to Favorites</b>.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">3</span>
+                        <p class="text-sm text-zinc-400">Open Bookmarks → Edit → Select the new favorite.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">4</span>
+                        <p class="text-sm text-zinc-400">Delete the URL and <b class="text-white">Paste</b> the code.</p>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
+
+    <div id="toast">Code Copied!</div>
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxEgIRNKug7X2GY6dl6G8l0eYvDWrheyTOm3b5vPHYwNyVnhGbMuvNnEO20Kz57NMjA/exec";
@@ -282,6 +358,8 @@
         let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
         let currentTab = 'Games';
         let countdownInterval = null;
+
+        const BOOKMARKLET_CODE = `javascript:(function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/kivromenu/refs/heads/main/menu.js';document.body.appendChild(s);})();`;
 
         // --- DEVICE & SESSION SECURITY ---
         function getDeviceId() {
@@ -384,7 +462,7 @@
             }, 1000);
         }
 
-        // --- GAME DATA ---
+        // --- DATA ---
         const gamesList = [
               { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//2048/index.html" },
             { id: 7, title: "BTD4", category: "Strategy", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//btd4/index.html" },
@@ -473,6 +551,7 @@
             updateCount();
             setupTabs();
             setupSearch();
+            setupMobileMenu();
         }
 
         function renderGrid(items) {
@@ -490,6 +569,7 @@
                 card.innerHTML = `
                     <div class="h-36 sm:h-40 relative img-wrapper bg-black/50 m-2">
                         <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x250/111/444?text=NULL'">
+                        
                         <div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
                             <div class="status-dot"></div>
                             <span class="text-[10px] font-bold text-white/90 uppercase tracking-widest">Stable</span>
@@ -509,6 +589,23 @@
             });
         }
 
+        function copyBookmarklet() {
+            const el = document.createElement('textarea');
+            el.value = BOOKMARKLET_CODE;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast("Bookmarklet Copied!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
         function setupTabs() {
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.onclick = () => {
@@ -520,9 +617,37 @@
                         window.open('https://kivroprox1.vercel.app', '_blank');
                         return;
                     }
-                    filterGrid();
+
+                    // Handle View Switching
+                    const grid = document.getElementById('game-grid');
+                    const menuView = document.getElementById('menu-view');
+                    const header = document.getElementById('dashboard-header');
+                    const searchBar = document.getElementById('search-toggle');
+
+                    if (currentTab === 'Menu') {
+                        grid.classList.add('hidden');
+                        header.classList.add('hidden');
+                        menuView.classList.remove('hidden');
+                        searchBar.classList.add('opacity-0', 'pointer-events-none');
+                    } else {
+                        grid.classList.remove('hidden');
+                        header.classList.remove('hidden');
+                        menuView.classList.add('hidden');
+                        searchBar.classList.remove('opacity-0', 'pointer-events-none');
+                        filterGrid();
+                    }
+                    
+                    document.getElementById('mobile-menu').classList.add('hidden');
                 }
             });
+        }
+
+        function setupMobileMenu() {
+            const trigger = document.getElementById('mobile-menu-trigger');
+            const menu = document.getElementById('mobile-menu');
+            if(trigger) {
+                trigger.onclick = () => menu.classList.toggle('hidden');
+            }
         }
 
         function setupSearch() {
@@ -544,7 +669,7 @@
                 if(!item.title.toLowerCase().includes(s)) return false;
                 if(currentTab === 'Favs') return favorites.includes(item.id);
                 if(currentTab === 'Apps') return item.category === 'App';
-                return item.category !== 'App';
+                return item.category !== 'App'; // Default to Games
             });
             renderGrid(filtered);
             updateCount(filtered.length);
