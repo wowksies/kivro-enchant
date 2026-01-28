@@ -29,8 +29,8 @@
                         void: '#050505',
                         panel: '#0f0f0f',
                         accent: {
-                            DEFAULT: '#8b5cf6', // Violet 500
-                            glow: '#a78bfa',    // Violet 400
+                            DEFAULT: '#8b5cf6',
+                            glow: '#a78bfa',
                         }
                     },
                     animation: {
@@ -69,7 +69,6 @@
             overflow-x: hidden;
         }
 
-        /* --- LIQUID BACKGROUND --- */
         .liquid-bg {
             position: fixed; inset: 0; z-index: -2;
             background: #000;
@@ -84,17 +83,16 @@
             animation: blob 20s infinite alternate;
         }
         
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #4c1d95; } /* Deep Violet */
-        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #312e81; animation-delay: -5s; } /* Indigo */
-        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #701a75; animation-delay: -10s; opacity: 0.3; } /* Magenta */
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #4c1d95; }
+        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #312e81; animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #701a75; animation-delay: -10s; opacity: 0.3; }
 
-        /* --- SMOOTH CARDS --- */
         .smooth-card {
             background: rgba(20, 20, 20, 0.4);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 28px; /* Rounder */
+            border-radius: 28px;
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -114,7 +112,6 @@
             mask-image: -webkit-radial-gradient(white, black);
         }
 
-        /* --- UI ELEMENTS --- */
         .nav-pill {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
@@ -141,13 +138,7 @@
             color: #000;
             box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
         }
-        
-        .nav-btn:hover:not(.active) {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-        }
 
-        /* --- MODALS --- */
         .modal-surface {
             background: rgba(15, 15, 15, 0.85);
             backdrop-filter: blur(32px);
@@ -157,7 +148,6 @@
             box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9);
         }
 
-        /* --- INPUT --- */
         .liquid-input {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -187,9 +177,8 @@
         <div class="blob-3"></div>
     </div>
 
-    <!-- SITE LOCK / ACCESS CONTROL -->
+    <!-- SITE LOCK -->
     <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center transition-all duration-700">
-        <!-- Floating Elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-[100px] animate-blob"></div>
             <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-[100px] animate-blob" style="animation-delay: -2s;"></div>
@@ -200,83 +189,52 @@
                 <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 rounded-xl opacity-80">
             </div>
             
-            <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Kivro Enhanced</h1>
-            <p class="text-sm text-zinc-500 mb-8">Protected Environment</p>
+            <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Kivro Premium</h1>
+            <p class="text-xs text-zinc-500 mb-6 uppercase tracking-widest">Secure Access Required</p>
+
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-6 mb-8 text-left">
+                <h4 class="text-[10px] font-bold text-zinc-500 uppercase mb-4 tracking-tighter">Pricing Plans</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-zinc-300">1 Day Access</span>
+                        <span class="text-sm font-bold text-white">3€</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-zinc-300">7 Day Access</span>
+                        <span class="text-sm font-bold text-white">7€</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-zinc-300">Lifetime Access</span>
+                        <span class="text-sm font-bold text-violet-400">15€</span>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-white/5 text-center">
+                    <p class="text-[9px] font-bold text-red-500/80 uppercase tracking-widest">Strict No Refund Policy</p>
+                </div>
+            </div>
 
             <div class="relative group">
                 <input type="password" id="site-key-input" 
                     class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-center text-white text-lg tracking-[0.5em] placeholder-zinc-700 focus:outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all shadow-lg"
                     placeholder="KEY">
-                <div class="absolute inset-0 rounded-2xl ring-1 ring-white/20 group-hover:ring-violet-500/30 pointer-events-none transition-all"></div>
             </div>
 
-            <div id="site-key-error" class="mt-4 text-red-400 text-xs font-bold opacity-0 transition-opacity">ACCESS DENIED</div>
+            <div id="site-key-error" class="mt-4 text-red-400 text-xs font-bold opacity-0 transition-opacity uppercase tracking-widest">ACCESS DENIED</div>
             
-            <button onclick="unlockSite()" class="mt-8 w-full py-4 rounded-2xl bg-white text-black font-bold text-sm hover:bg-violet-100 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+            <button onclick="unlockSite()" class="mt-6 w-full py-4 rounded-2xl bg-white text-black font-bold text-sm hover:bg-violet-100 transition-all shadow-xl">
                 Initialize System
             </button>
         </div>
     </div>
 
-    <!-- MAIN APP WRAPPER (Hidden initially) -->
+    <!-- MAIN APP CONTENT -->
     <div id="app-content" class="opacity-0 scale-95 transition-all duration-700 blur-sm h-screen overflow-y-auto">
-
-        <!-- INSTALL PANEL -->
-        <div id="install-popup" class="fixed inset-0 z-[90] hidden bg-black/60 backdrop-blur-md flex items-end sm:items-center justify-center p-4">
-            <div id="install-sheet" class="w-full max-w-md modal-surface p-8 transform translate-y-20 opacity-0 transition-all duration-500">
-                <div class="flex justify-between items-center mb-8">
-                    <div class="flex items-center gap-4">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-14 h-14 rounded-2xl shadow-lg">
-                        <div>
-                            <h3 class="text-lg font-bold text-white">Install App</h3>
-                            <p class="text-sm text-zinc-500">Add to Home Screen</p>
-                        </div>
-                    </div>
-                    <button id="close-install" class="p-2 rounded-full hover:bg-white/5 text-zinc-500 hover:text-white transition-colors">✕</button>
-                </div>
-
-                <div class="grid grid-cols-3 gap-4 mb-8">
-                    <div class="select-icon bg-white/5 border border-transparent p-4 rounded-3xl text-center cursor-pointer hover:bg-white/10 hover:scale-105 transition-all group" data-name="Teams" data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="w-10 h-10 mx-auto mb-3 rounded-xl shadow-sm">
-                        <span class="text-[10px] font-bold text-zinc-500 group-hover:text-white uppercase tracking-wide">Teams</span>
-                    </div>
-                    <div class="select-icon bg-white/5 border border-transparent p-4 rounded-3xl text-center cursor-pointer hover:bg-white/10 hover:scale-105 transition-all group" data-name="Kahoot!" data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="w-10 h-10 mx-auto mb-3 rounded-xl shadow-sm">
-                        <span class="text-[10px] font-bold text-zinc-500 group-hover:text-white uppercase tracking-wide">Kahoot</span>
-                    </div>
-                    <div class="select-icon bg-white/5 border border-transparent p-4 rounded-3xl text-center cursor-pointer hover:bg-white/10 hover:scale-105 transition-all group" data-name="Notes" data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-10 h-10 mx-auto mb-3 rounded-xl shadow-sm">
-                        <span class="text-[10px] font-bold text-zinc-500 group-hover:text-white uppercase tracking-wide">Notes</span>
-                    </div>
-                </div>
-                
-                <button class="w-full py-4 rounded-2xl bg-white/5 text-zinc-400 font-bold text-sm pointer-events-none">
-                    Tap Share → Add to Home Screen
-                </button>
-            </div>
-        </div>
-
-        <!-- DISCLAIMER -->
-        <div id="disclaimer-popup" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-xl flex items-center justify-center p-6">
-            <div class="w-full max-w-xs modal-surface p-8 text-center">
-                <div class="w-16 h-16 bg-violet-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-2xl text-violet-400">↗</span>
-                </div>
-                <h3 class="text-lg font-bold text-white mb-2">Leaving App</h3>
-                <p class="text-sm text-zinc-500 mb-8 leading-relaxed">You are being redirected to an external partner application.</p>
-                <button id="disclaimer-btn" class="w-full py-4 rounded-2xl bg-white/5 text-zinc-500 text-xs font-bold uppercase tracking-wider cursor-not-allowed">Redirecting...</button>
-            </div>
-        </div>
-
-        <!-- NAVBAR -->
-        <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5">
             <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-                
-                <div class="flex items-center gap-4 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg group-hover:scale-105 transition-transform duration-300">
+                <div class="flex items-center gap-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg">
                 </div>
 
-                <!-- Pill Nav -->
                 <div class="nav-pill hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
                     <button class="nav-btn active" data-tab="Games">Library</button>
                     <button class="nav-btn" data-tab="Apps">Apps</button>
@@ -285,82 +243,150 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <button id="search-toggle" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all backdrop-blur-md">
+                    <div class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5">
+                        <div id="timer-dot" class="status-dot"></div>
+                        <span id="header-timer" class="text-[10px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
+                    </div>
+                    <button id="search-toggle" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-zinc-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </button>
-                    
-                    <!-- Mobile Menu Trigger -->
-                    <div class="sm:hidden">
-                        <button class="bg-white/10 backdrop-blur-md text-white px-5 py-3 rounded-full text-sm font-bold" id="mobile-menu-trigger">Menu</button>
-                    </div>
                 </div>
             </div>
 
-            <!-- Mobile Menu Dropdown -->
-            <div id="mobile-menu" class="hidden sm:hidden bg-black/90 backdrop-blur-2xl border-b border-white/5 p-4 absolute w-full left-0 top-24">
-                <div class="flex flex-col gap-2">
-                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Games">Library</button>
-                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Apps">Apps</button>
-                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Proxy">Proxy</button>
-                    <button class="nav-btn text-center w-full py-4 hover:bg-white/5 rounded-2xl" data-tab="Favs">Saved</button>
-                </div>
-            </div>
-
-            <!-- Search Bar -->
-            <div id="search-bar" class="hidden absolute top-24 left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/5 p-6 transition-all">
+            <div id="search-bar" class="hidden absolute top-24 left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/5 p-6">
                 <div class="max-w-3xl mx-auto">
-                    <input type="text" id="global-search" placeholder="Search..." class="liquid-input w-full py-5 px-8 text-white text-lg placeholder-zinc-500">
+                    <input type="text" id="global-search" placeholder="Search..." class="liquid-input w-full py-5 px-8 text-white text-lg">
                 </div>
             </div>
         </nav>
 
-        <!-- CONTENT -->
         <main class="pt-36 pb-12 px-4 max-w-7xl mx-auto min-h-screen">
-
-            <!-- DASHBOARD HEADER -->
             <div class="text-center mb-16 fade-up">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-zinc-400 text-xs font-bold mb-6 backdrop-blur-md">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-zinc-400 text-[10px] font-bold mb-6">
                     <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Status: Operational
+                    Status: System Secure
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl">Premium Library</h1>
-                <p class="text-zinc-400 font-medium text-lg">Secure access to <span id="item-count" class="text-white font-bold">0</span> exclusive applications.</p>
-                
-                <div class="flex justify-center gap-4 mt-8">
-                    <button id="install-trigger" class="px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-bold text-white transition-all backdrop-blur-md">Install App</button>
-                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank" class="px-8 py-4 rounded-full bg-white text-black hover:bg-violet-100 text-sm font-bold transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]">Request</a>
-                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">Premium Library</h1>
+                <p class="text-zinc-400 font-medium text-lg">Accessing <span id="item-count" class="text-white font-bold">0</span> applications.</p>
             </div>
 
-            <!-- GRID -->
-            <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8">
-                <!-- Populated via JS -->
-            </div>
-
+            <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8"></div>
         </main>
-
-        <footer class="py-12 text-center border-t border-white/5 mt-12 bg-black/20 backdrop-blur-md">
-            <p class="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">Kivro Enhanced v6.0 • Liquid Build</p>
-        </footer>
-
-        <!-- PANIC BUTTON -->
-        <a href="https://member.foodvillage.ie/login" class="fixed bottom-8 right-8 z-40 w-16 h-16 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/40 flex items-center justify-center text-red-500 hover:text-red-400 transition-all rounded-3xl backdrop-blur-md shadow-2xl group hover:scale-110 active:scale-95">
-            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-        </a>
-    
-    </div> <!-- End App Content -->
+    </div>
 
     <script>
-        // CONFIG
-        const API_URL = "https://script.google.com/macros/s/AKfycbyxidAroQ6-d_EGj8qxAeHt0qvmDga9Bs7jqMoWFz7_3qYeM_RbP37uPO_0W2zqcD6n/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxEgIRNKug7X2GY6dl6G8l0eYvDWrheyTOm3b5vPHYwNyVnhGbMuvNnEO20Kz57NMjA/exec";
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
+        
         let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
         let currentTab = 'Games';
+        let countdownInterval = null;
 
-        // DATA
+        // --- DEVICE & SESSION SECURITY ---
+        function getDeviceId() {
+            let id = localStorage.getItem('kivro_device_token');
+            if (!id) {
+                id = 'KIV-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now().toString(36);
+                localStorage.setItem('kivro_device_token', id);
+            }
+            return id;
+        }
+
+        async function unlockSite() {
+            const input = document.getElementById('site-key-input');
+            const error = document.getElementById('site-key-error');
+            const btn = document.querySelector('#site-lock button');
+            const key = input.value.trim();
+            const deviceId = getDeviceId();
+
+            if (!key) {
+                showError("Enter Key");
+                return;
+            }
+
+            btn.innerText = "VERIFYING...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}`);
+                const data = await response.json();
+
+                if (data.valid) {
+                    const session = {
+                        key: key,
+                        expiresAt: data.expiresAt,
+                        isUnlimited: data.isUnlimited,
+                        timestamp: Date.now()
+                    };
+                    localStorage.setItem('kivro_premium_session', JSON.stringify(session));
+                    enterSystem(session);
+                } else {
+                    showError(data.message || "Invalid Access");
+                }
+            } catch (err) {
+                showError("Server Error");
+                console.error(err);
+            } finally {
+                btn.innerText = "Initialize System";
+                btn.disabled = false;
+            }
+
+            function showError(msg) {
+                error.innerText = msg;
+                error.classList.remove('opacity-0');
+                setTimeout(() => error.classList.add('opacity-0'), 3000);
+            }
+        }
+
+        function enterSystem(session) {
+            document.getElementById('site-lock').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('site-lock').style.display = 'none';
+                document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
+                document.getElementById('main-body').classList.remove('overflow-hidden');
+                
+                startGlobalTimer(session.expiresAt, session.isUnlimited);
+                init();
+            }, 500);
+        }
+
+        function startGlobalTimer(expiresAt, isUnlimited) {
+            const timerEl = document.getElementById('header-timer');
+            const dot = document.getElementById('timer-dot');
+            
+            if (isUnlimited) {
+                timerEl.innerText = "LIFETIME ∞";
+                dot.classList.add('bg-violet-400');
+                return;
+            }
+
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                const now = Date.now();
+                const diff = expiresAt - now;
+
+                if (diff <= 0) {
+                    clearInterval(countdownInterval);
+                    localStorage.removeItem('kivro_premium_session');
+                    window.location.reload();
+                    return;
+                }
+
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+
+                timerEl.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                if (diff < 3600000) dot.style.backgroundColor = '#f87171'; // Red for last hour
+            }, 1000);
+        }
+
+        // --- GAME DATA ---
         const gamesList = [
-            { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//2048/index.html" },
+              { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//2048/index.html" },
             { id: 7, title: "BTD4", category: "Strategy", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//btd4/index.html" },
             { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//bitlife/index.html" },
             { id: 8, title: "Chess", category: "Strategy", imgUrl: THUMB_BASE + "chess.jpg", gameUrl: GITHUB_BASE + "chess/index.html" },
@@ -441,126 +467,37 @@
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
 
-        // SITE LOCK LOGIC
-        async function unlockSite() {
-            const input = document.getElementById('site-key-input');
-            const error = document.getElementById('site-key-error');
-            const lockScreen = document.getElementById('site-lock');
-            const appContent = document.getElementById('app-content');
-            const body = document.getElementById('main-body');
-            const btn = document.querySelector('#site-lock button');
-
-            // 1. Get and clean the key
-            const key = input.value.trim();
-
-            // 2. Prevent sending empty requests (Fixes "No key provided")
-            if (!key) {
-                showError("ENTER A KEY");
-                return;
-            }
-
-            // Feedback: Loading State
-            const originalText = btn.innerText;
-            btn.innerText = "VERIFYING...";
-            btn.disabled = true;
-            input.disabled = true;
-
-            try {
-                // CALL THE BACKEND (GOOGLE APPS SCRIPT)
-                const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}`);
-                const data = await response.json();
-
-                if (data.valid) {
-                    // SUCCESS: Access Granted
-                    localStorage.setItem('kivro_access_v1', 'granted'); // PERSISTENCE
-                    
-                    lockScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        lockScreen.style.display = 'none';
-                        appContent.classList.remove('opacity-0', 'scale-95', 'blur-sm');
-                        body.classList.remove('overflow-hidden');
-                        init(); // Load content
-                    }, 500);
-                } else {
-                    // FAIL: Invalid or Used Key
-                    showError(data.message || "ACCESS DENIED");
-                }
-            } catch (err) {
-                // ERROR: Network/Server issue
-                showError("CONNECTION ERROR");
-                console.error(err);
-            } finally {
-                // Reset UI
-                btn.innerText = originalText;
-                btn.disabled = false;
-                input.disabled = false;
-                if(lockScreen.style.display !== 'none') input.focus();
-            }
-
-            function showError(msg) {
-                error.innerText = msg;
-                error.classList.remove('opacity-0');
-                // Don't clear input instantly so user can fix typo
-                setTimeout(() => error.classList.add('opacity-0'), 3000);
-            }
-        }
-
-        document.getElementById('site-key-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') unlockSite();
-        });
-
-        // CORE APP LOGIC
+        // --- APP LOGIC ---
         function init() {
             renderGrid(gamesList);
             updateCount();
             setupTabs();
             setupSearch();
-            setupInstall();
-
-            // Remove splash if still visible (unlikely in new flow, but safe to keep)
-            const splash = document.getElementById('splash-screen');
-            if(splash) {
-                 splash.style.opacity = '0';
-                 setTimeout(() => splash.style.display = 'none', 500);
-            }
         }
 
         function renderGrid(items) {
             const grid = document.getElementById('game-grid');
             grid.innerHTML = '';
             
-            if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-20 text-center text-zinc-600 font-bold text-sm uppercase tracking-wider">No Results Found</div>`;
-                return;
-            }
-
             items.forEach((item, index) => {
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
                 card.className = "smooth-card group cursor-pointer animate-fade-up";
-                card.style.animationDelay = `${index * 40}ms`;
+                card.style.animationDelay = `${index * 30}ms`;
 
-                card.onclick = () => {
-                    if(item.id === 1001) openDisclaimer(item.gameUrl);
-                    else window.open(item.gameUrl, '_blank');
-                };
+                card.onclick = () => window.open(item.gameUrl, '_blank');
 
                 card.innerHTML = `
                     <div class="h-36 sm:h-40 relative img-wrapper bg-black/50 m-2">
                         <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x250/111/444?text=NULL'">
-                        
-                        <div class="absolute top-2 right-2 flex gap-1">
-                             <div class="bg-black/40 backdrop-blur-md px-2 py-1 rounded-full text-[10px] font-bold text-white/80 group-hover:text-white transition-colors border border-white/5">V1.0</div>
-                        </div>
-
                         <div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
                             <div class="status-dot"></div>
-                            <span class="text-[10px] font-bold text-white/90">Ready</span>
+                            <span class="text-[10px] font-bold text-white/90 uppercase tracking-widest">Stable</span>
                         </div>
                     </div>
                     <div class="px-5 pb-5 pt-2 flex justify-between items-start">
                         <div>
-                            <h3 class="text-sm font-bold text-zinc-100 group-hover:text-violet-300 transition-colors truncate max-w-[120px]">${item.title}</h3>
+                            <h3 class="text-sm font-bold text-zinc-100 truncate max-w-[120px]">${item.title}</h3>
                             <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-wide mt-0.5">${item.category}</p>
                         </div>
                         <button onclick="toggleFav(event, ${item.id})" class="text-zinc-600 hover:text-yellow-400 transition-colors ${isFav ? 'text-yellow-400' : ''}">
@@ -572,42 +509,22 @@
             });
         }
 
-        // TABS
         function setupTabs() {
-            const btns = document.querySelectorAll('.nav-btn');
-            
-            btns.forEach(btn => {
-                btn.addEventListener('click', () => handleTabSwitch(btn));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentTab = btn.dataset.tab;
+                    
+                    if (currentTab === 'Proxy') {
+                        window.open('https://kivroprox1.vercel.app', '_blank');
+                        return;
+                    }
+                    filterGrid();
+                }
             });
-
-            const mobileTrigger = document.getElementById('mobile-menu-trigger');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if(mobileTrigger) {
-                mobileTrigger.onclick = () => {
-                    mobileMenu.classList.toggle('hidden');
-                };
-            }
         }
 
-        function handleTabSwitch(btn) {
-            const tab = btn.dataset.tab;
-            if(!tab) return;
-
-            if(tab === 'Proxy') {
-                // OPEN PROXY DIRECTLY NOW (NO PASSWORD)
-                window.open('https://kivroprox1.vercel.app', '_blank');
-                return;
-            }
-
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll(`.nav-btn[data-tab="${tab}"]`).forEach(b => b.classList.add('active'));
-            document.getElementById('mobile-menu').classList.add('hidden');
-
-            currentTab = tab;
-            filterGrid();
-        }
-
-        // SEARCH
         function setupSearch() {
             const toggle = document.getElementById('search-toggle');
             const bar = document.getElementById('search-bar');
@@ -623,25 +540,18 @@
         function filterGrid(term = '') {
             const s = term.toLowerCase();
             const all = [...gamesList, ...appsList];
-            
             const filtered = all.filter(item => {
                 if(!item.title.toLowerCase().includes(s)) return false;
                 if(currentTab === 'Favs') return favorites.includes(item.id);
                 if(currentTab === 'Apps') return item.category === 'App';
                 return item.category !== 'App';
             });
-
-            if(currentTab === 'Games' && !term) {
-                filtered.sort((a,b) => (favorites.includes(b.id) ? 1 : 0) - (favorites.includes(a.id) ? 1 : 0));
-            }
-
             renderGrid(filtered);
             updateCount(filtered.length);
         }
 
         function updateCount(n) {
-            const c = n !== undefined ? n : gamesList.length + appsList.length;
-            document.getElementById('item-count').innerText = c;
+            document.getElementById('item-count').innerText = n || gamesList.length;
         }
 
         window.toggleFav = (e, id) => {
@@ -649,90 +559,24 @@
             if(favorites.includes(id)) favorites = favorites.filter(x => x !== id);
             else favorites.push(id);
             localStorage.setItem('kivro_favs', JSON.stringify(favorites));
-            
-            if(currentTab === 'Favs') {
-                filterGrid();
-            } else {
-                const btn = e.currentTarget;
-                const svg = btn.querySelector('svg');
-                if(favorites.includes(id)) {
-                    btn.classList.add('text-yellow-400');
-                    svg.setAttribute('fill', 'currentColor');
+            filterGrid();
+        };
+
+        // --- SESSION RESUME ---
+        window.onload = () => {
+            const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
+            if (session) {
+                if (!session.isUnlimited && session.expiresAt < Date.now()) {
+                    localStorage.removeItem('kivro_premium_session');
                 } else {
-                    btn.classList.remove('text-yellow-400');
-                    svg.setAttribute('fill', 'none');
+                    enterSystem(session);
                 }
             }
         };
 
-        // INSTALL
-        function setupInstall() {
-            const m = document.getElementById('install-popup');
-            const inner = document.getElementById('install-sheet');
-            
-            document.getElementById('install-trigger').onclick = () => {
-                m.classList.remove('hidden');
-                setTimeout(() => { m.classList.remove('opacity-0'); inner.classList.remove('translate-y-20', 'opacity-0'); }, 10);
-            };
-
-            document.getElementById('close-install').onclick = () => {
-                m.classList.add('opacity-0');
-                inner.classList.add('translate-y-20', 'opacity-0');
-                setTimeout(() => m.classList.add('hidden'), 500);
-            };
-
-            document.querySelectorAll('.select-icon').forEach(el => {
-                el.onclick = () => {
-                    document.querySelectorAll('.select-icon').forEach(x => {
-                        x.classList.remove('bg-white/10', 'scale-105');
-                        x.classList.add('bg-white/5');
-                        x.querySelector('span').classList.remove('text-white');
-                    });
-                    el.classList.remove('bg-white/5');
-                    el.classList.add('bg-white/10', 'scale-105');
-                    el.querySelector('span').classList.add('text-white');
-                    
-                    document.getElementById('apple-touch-icon').href = el.dataset.icon;
-                    document.title = el.dataset.name;
-                }
-            });
-        }
-
-        let discInterval;
-        function openDisclaimer(url) {
-            const m = document.getElementById('disclaimer-popup');
-            const btn = document.getElementById('disclaimer-btn');
-            m.classList.remove('hidden');
-            
-            let t = 3;
-            btn.innerText = `Redirecting in ${t}s...`;
-            
-            clearInterval(discInterval);
-            discInterval = setInterval(() => {
-                t--;
-                btn.innerText = `Redirecting in ${t}s...`;
-                if(t <= 0) {
-                    clearInterval(discInterval);
-                    window.open(url, '_blank');
-                    m.classList.add('hidden');
-                }
-            }, 1000);
-        }
-
-        // CHECK SESSION (PERSISTENCE) - MOVED TO END
-        const hasAccess = localStorage.getItem('kivro_access_v1');
-        if(hasAccess) {
-             const lock = document.getElementById('site-lock');
-             if(lock) {
-                 lock.style.display = 'none';
-                 lock.style.opacity = '0';
-             }
-             document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
-             document.getElementById('main-body').classList.remove('overflow-hidden');
-             
-             // Initialize the app immediately
-             init();
-        }
+        document.getElementById('site-key-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') unlockSite();
+        });
     </script>
 </body>
 </html>
