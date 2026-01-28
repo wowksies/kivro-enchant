@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -360,7 +359,8 @@
         let currentTab = 'Games';
         let countdownInterval = null;
 
-        const BOOKMARKLET_CODE = `javascript:(function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/kivromenu/refs/heads/main/menu.js';document.body.appendChild(s);})();`;
+        // FIXED URL for iPad Safari support (correct raw file, correct MIME, alerts on error)
+        const BOOKMARKLET_CODE = `javascript:(function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/kivromenu/main/menu.js';s.type='text/javascript';s.crossOrigin='anonymous';s.onerror=function(){alert('Kivro Menu failed to load. Please try again.')};document.body.appendChild(s);})();`;
 
         // --- DEVICE & SESSION SECURITY ---
         function getDeviceId() {
@@ -591,6 +591,19 @@
         }
 
         function copyBookmarklet() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(BOOKMARKLET_CODE).then(() => {
+                    showToast("Bookmarklet Copied!");
+                }).catch(() => {
+                    // Fallback if permission denied
+                    fallbackCopy();
+                });
+            } else {
+                fallbackCopy();
+            }
+        }
+
+        function fallbackCopy() {
             const el = document.createElement('textarea');
             el.value = BOOKMARKLET_CODE;
             document.body.appendChild(el);
