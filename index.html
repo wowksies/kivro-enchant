@@ -205,7 +205,7 @@
 
             <div class="bg-white/5 border border-white/10 rounded-3xl p-6 mb-8 text-left">
                 <h4 class="text-[10px] font-bold text-zinc-500 uppercase mb-4 tracking-tighter">Pricing Plans</h4>
-                <div class="space-y-3">
+                <div class="space-y-3 mb-6">
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-zinc-300">1 Day Access</span>
                         <span class="text-sm font-bold text-white">3€</span>
@@ -218,6 +218,29 @@
                         <span class="text-sm text-zinc-300">Lifetime Access</span>
                         <span class="text-sm font-bold text-violet-400">15€</span>
                     </div>
+                </div>
+
+                <!-- ADDED PURCHASE INFO SECTION -->
+                <div class="pt-4 border-t border-white/10 space-y-3">
+                     <div class="flex items-start gap-3">
+                        <div class="mt-0.5 w-4 h-4 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0">
+                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-zinc-500 uppercase">Payment</p>
+                            <p class="text-xs text-white font-medium">Cash Only (In Person)</p>
+                        </div>
+                    </div>
+                    
+                    <a href="mailto:kayazissigma@gmail.com" class="flex items-start gap-3 group hover:bg-white/5 -mx-2 p-2 rounded-lg transition-colors">
+                        <div class="mt-0.5 w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-zinc-500 uppercase">Purchase Key</p>
+                            <p class="text-xs text-blue-300 font-medium underline decoration-blue-500/30 underline-offset-2">kayazissigma@gmail.com</p>
+                        </div>
+                    </a>
                 </div>
             </div>
 
@@ -234,8 +257,8 @@
                     Initialize System
                 </button>
             </div>
-            <button onclick="startFreePreview()" class="w-full mt-3 py-3 rounded-xl bg-white/5 text-zinc-400 font-bold text-xs hover:bg-white/10 hover:text-white transition-all border border-white/5">
-                Try Free Access (30m)
+            <button onclick="startVisualPreview()" class="w-full mt-3 py-3 rounded-xl bg-white/5 text-zinc-400 font-bold text-xs hover:bg-white/10 hover:text-white transition-all border border-white/5">
+                View Library (Visual Preview)
             </button>
         </div>
     </div>
@@ -299,13 +322,40 @@
                 <h1 id="page-title" class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">Premium Library</h1>
                 <p class="text-zinc-400 font-medium text-lg">Accessing <span id="item-count" class="text-white font-bold">0</span> applications.</p>
                 
-                <!-- BUY BUTTON (Hidden by default) -->
-                <div id="free-mode-cta" class="hidden mt-8 animate-fade-up">
-                    <a href="https://kivro-enchant.vercel.app" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-extrabold rounded-full hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.3)] animate-pulse">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
-                        BUY PREMIUM KEY
-                    </a>
-                    <p class="text-xs text-zinc-500 mt-3 font-mono">UNLOCK PROXY • MENU • ALL GAMES</p>
+                <!-- NEW PURCHASE CARD -->
+                <div id="free-mode-cta" class="hidden mt-10 max-w-md mx-auto animate-fade-up">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600/20 to-black border border-violet-500/30 p-8 backdrop-blur-md shadow-2xl">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-violet-500/30 blur-3xl rounded-full"></div>
+                        
+                        <div class="relative z-10 text-left">
+                            <h3 class="text-2xl font-extrabold text-white mb-2 text-center">Get Premium Access</h3>
+                            <p class="text-sm text-zinc-400 mb-6 text-center">Unlock Proxy • Menu • All Games</p>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <div class="w-10 h-10 flex-shrink-0 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-xs font-bold text-zinc-500 uppercase">Payment Method</p>
+                                        <p class="text-white font-bold">Cash Only (In Person)</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                     <div class="w-10 h-10 flex-shrink-0 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div class="text-left overflow-hidden">
+                                        <p class="text-xs font-bold text-zinc-500 uppercase">Contact</p>
+                                        <p class="text-white font-bold select-all truncate">kayazissigma@gmail.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="mt-6 text-xs text-center text-zinc-500">Find me IRL or email to purchase a key.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -371,7 +421,7 @@
         let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
         let currentTab = 'Games';
         let countdownInterval = null;
-        let isFreeMode = false;
+        let isPreviewMode = false;
 
         const BOOKMARKLET_CODE = "javascript:(function(){if(document.getElementById('kivro-menu-v2'))return;const MENU_ITEMS=[{name:\"🦄 Blooket Cheats (GUI)\",code:\"(function(){var s=document.createElement('script');s.src='https://raw.githack.com/Zip-On/Zips-Blooket-Hacks-And-Cheats-GUI/main/Gui.js';document.body.appendChild(s);alert('Blooket GUI Injecting...');})();\"},{name:\"👆 iPad Autoclicker (Target)\",code:\"(function(){if(window.kivroAC){clearInterval(window.kivroAC);window.kivroAC=null;var t=document.getElementById('kivro-ac-target');if(t)t.remove();alert('Autoclicker: OFF');}else{var t=document.createElement('div');t.id='kivro-ac-target';t.style.cssText='position:fixed;top:50%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:4px solid rgba(255,0,60,0.6);border-radius:50%;z-index:9999999999;box-shadow:0 0 15px rgba(255,0,60,0.4);pointer-events:none;transition:transform 0.1s;';var h=document.createElement('div');h.style.cssText='position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:rgba(255,0,60,0.9);border-radius:50%;cursor:move;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;font-weight:bold;';h.innerText='✢';t.appendChild(h);var c=document.createElement('div');c.style.cssText='position:absolute;top:50%;left:50%;width:4px;height:4px;background:red;transform:translate(-50%,-50%);border-radius:50%;';t.appendChild(c);document.body.appendChild(t);let d=false;const mv=(e)=>{if(!d)return;e.preventDefault();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;t.style.left=cx+'px';t.style.top=cy+'px';};const dn=(e)=>{d=true;e.preventDefault();t.style.transform='scale(1.1)';};const up=()=>{d=false;t.style.transform='scale(1)';};h.addEventListener('mousedown',dn);h.addEventListener('touchstart',dn);document.addEventListener('mousemove',mv);document.addEventListener('touchmove',mv);document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp);alert('Autoclicker: ON. Drag the red knob to move.');window.kivroAC=setInterval(function(){var r=t.getBoundingClientRect();var el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);if(el&&el!==t&&el!==h&&el!==c){el.click();el.dispatchEvent(new MouseEvent('mousedown'));el.dispatchEvent(new MouseEvent('mouseup'));}},50);}})();\"},{name:\"🌊 History Flooder\",code:\"(function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/HistoryFlooder.js';document.body.appendChild(s);alert('History Flooder Loading...');})();\"},{name:\"📺 Fullscreen Anywhere\",code:\"(function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/InstantFullscreen.js';document.body.appendChild(s);alert('Enabling Fullscreen...');})();\"}];const css=`#kivro-menu-v2{position:fixed;top:100px;left:100px;width:260px;display:flex;flex-direction:column;background:rgba(20,20,30,0.65);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,0.15);border-top:1px solid rgba(255,255,255,0.3);border-left:1px solid rgba(255,255,255,0.3);border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,0.5),inset 0 0 20px rgba(255,255,255,0.05);font-family:system-ui,-apple-system,sans-serif;color:white;z-index:2147483647;transition:width 0.3s,height 0.3s,border-radius 0.3s,background 0.3s;overflow:hidden;user-select:none}#kivro-menu-v2.minimized{width:60px;height:60px;border-radius:50%;background:url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png');background-size:cover;background-position:center;box-shadow:0 0 20px rgba(139,92,246,0.6);border:2px solid rgba(255,255,255,0.5);cursor:pointer}#kivro-menu-v2.minimized>*{display:none !important}.kv-header{padding:16px;background:linear-gradient(to right,rgba(255,255,255,0.05),transparent);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}#kivro-menu-v2.minimized .kv-header{display:none}.kv-title{font-weight:800;font-size:12px;letter-spacing:1.5px;color:#a78bfa;text-transform:uppercase}.kv-controls{display:flex;gap:8px}.kv-btn-ctrl{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;font-family:monospace}.kv-body{padding:12px;max-height:400px;overflow-y:auto}.kv-btn{width:100%;padding:14px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:14px;color:#e4e4e7;font-size:13px;font-weight:600;text-align:left;cursor:pointer;transition:all 0.2s ease}.kv-btn:active{transform:scale(0.98);background:rgba(139,92,246,0.2)}`;const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);const ui=document.createElement('div');ui.id='kivro-menu-v2';ui.innerHTML='<div class=\"kv-header\"><span class=\"kv-title\">KIVRO PREMIUM</span><div class=\"kv-controls\"><div id=\"kv-min\" class=\"kv-btn-ctrl\">_</div><div id=\"kv-close\" class=\"kv-btn-ctrl\">X</div></div></div><div class=\"kv-body\"></div>';document.body.appendChild(ui);const body=ui.querySelector('.kv-body');MENU_ITEMS.forEach(item=>{const btn=document.createElement('button');btn.className='kv-btn';btn.innerText=item.name;const run=(e)=>{e.stopPropagation();try{eval(item.code)}catch(e){alert(e)}};btn.onclick=run;btn.ontouchend=run;body.appendChild(btn)});let isMin=false;let isDragging=false;let hasMoved=false;let startX,startY,initX,initY;const minBtn=ui.querySelector('#kv-min');const closeBtn=ui.querySelector('#kv-close');const header=ui.querySelector('.kv-header');const doMin=(e)=>{e.stopPropagation();e.preventDefault();isMin=true;ui.classList.add('minimized')};const doClose=(e)=>{e.stopPropagation();e.preventDefault();ui.remove();style.remove()};minBtn.ontouchend=doMin;minBtn.onclick=doMin;closeBtn.ontouchend=doClose;closeBtn.onclick=doClose;const stopProp=(e)=>{e.stopPropagation()};minBtn.ontouchstart=stopProp;minBtn.onmousedown=stopProp;closeBtn.ontouchstart=stopProp;closeBtn.onmousedown=stopProp;const onDown=(e)=>{if(e.target.closest('.kv-controls'))return;isDragging=true;hasMoved=false;const t=e.touches?e.touches[0]:e;startX=t.clientX;startY=t.clientY;initX=ui.offsetLeft;initY=ui.offsetTop;ui.style.transition='none'};const onMove=(e)=>{if(!isDragging)return;const t=e.touches?e.touches[0]:e;const dx=t.clientX-startX;const dy=t.clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5)hasMoved=true;ui.style.left=(initX+dx)+'px';ui.style.top=(initY+dy)+'px';if(e.cancelable)e.preventDefault()};const onUp=(e)=>{if(!isDragging)return;isDragging=false;ui.style.transition='width 0.3s, height 0.3s, border-radius 0.3s, background 0.3s';if(isMin&&!hasMoved){isMin=false;ui.classList.remove('minimized')}};ui.addEventListener('mousedown',onDown);ui.addEventListener('touchstart',onDown,{passive:false});document.addEventListener('mousemove',onMove);document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp)})();void(0);";
 
@@ -431,55 +481,14 @@
             }
         }
 
-        // --- FREE MODE LOGIC ---
-        const FREE_DURATION = 30 * 60 * 1000; // 30 minutes
-        const FREE_COOLDOWN = 3 * 60 * 60 * 1000; // 3 hours
-
-        function startFreePreview() {
-            let freeData = JSON.parse(localStorage.getItem('kivro_free_data'));
-            const now = Date.now();
-            
-            if (freeData) {
-                const elapsed = now - freeData.startTime;
-                
-                // Active Session?
-                if (elapsed < FREE_DURATION) {
-                    const session = {
-                        type: 'free',
-                        expiresAt: freeData.startTime + FREE_DURATION,
-                        games: freeData.games
-                    };
-                    enterSystem(session);
-                    return;
-                }
-
-                // Cooldown Active?
-                if (elapsed < FREE_COOLDOWN) {
-                    const waitMins = Math.ceil((FREE_COOLDOWN - elapsed) / 60000);
-                    const error = document.getElementById('site-key-error');
-                    error.innerText = `COOLDOWN ACTIVE: WAIT ${waitMins} MINS`;
-                    error.classList.remove('opacity-0');
-                    setTimeout(() => error.classList.add('opacity-0'), 3000);
-                    return;
-                }
-            }
-
-            // Start New Free Session
-            const shuffled = [...gamesList].sort(() => 0.5 - Math.random());
-            const selectedGames = shuffled.slice(0, 8).map(g => g.id); // Store IDs only
-            
-            freeData = {
-                startTime: now,
-                games: selectedGames
-            };
-            
-            localStorage.setItem('kivro_free_data', JSON.stringify(freeData));
-            
+        // --- PREVIEW MODE LOGIC ---
+        function startVisualPreview() {
+            // Visual preview only - no functional access
             const session = {
-                type: 'free',
-                expiresAt: now + FREE_DURATION,
-                games: selectedGames
+                type: 'preview',
+                expiresAt: Date.now() + 3600000 // 1 hour dummy session for state
             };
+            localStorage.setItem('kivro_preview_session', JSON.stringify(session));
             enterSystem(session);
         }
 
@@ -490,28 +499,23 @@
                 document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
                 document.getElementById('main-body').classList.remove('overflow-hidden');
                 
-                isFreeMode = (session.type === 'free');
+                isPreviewMode = (session.type === 'preview');
                 
                 // Update UI based on mode
-                if (isFreeMode) {
-                    document.getElementById('page-title').innerText = "Free Preview";
-                    document.getElementById('system-status-text').innerText = "Status: Free Preview Mode";
+                if (isPreviewMode) {
+                    document.getElementById('page-title').innerText = "Library Preview";
+                    document.getElementById('system-status-text').innerText = "Status: Read-Only Mode";
                     document.getElementById('system-status-dot').classList.remove('bg-green-500');
                     document.getElementById('system-status-dot').classList.add('bg-yellow-500');
                     
-                    // Hide Restricted Tabs
-                    document.getElementById('menu-tab-btn').classList.add('tab-hidden');
-                    document.getElementById('mobile-menu-tab-btn').classList.add('hidden');
-                    document.getElementById('proxy-tab-btn').classList.add('tab-hidden');
-                    document.getElementById('mobile-proxy-tab-btn').classList.add('hidden');
-                    
-                    // Show Buy Button
+                    // Show Buy Card
                     document.getElementById('free-mode-cta').classList.remove('hidden');
                     
-                    // Filter Grid to selected 8
-                    activeGamesList = gamesList.filter(g => session.games.includes(g.id));
+                    // Remove hidden restriction on buttons for visibility (logic restricts click)
+                    // Note: In previous version these had class additions, now we just don't hide them via JS
+                    // They are visible by default in HTML
                 } else {
-                    activeGamesList = gamesList; // Full access
+                    // Full access
                 }
 
                 startGlobalTimer(session.expiresAt, session.isUnlimited);
@@ -523,15 +527,21 @@
             const timerEl = document.getElementById('header-timer');
             const dot = document.getElementById('timer-dot');
             
-            if (isUnlimited && !isFreeMode) {
+            if (isUnlimited && !isPreviewMode) {
                 timerEl.innerText = "LIFETIME ∞";
                 dot.classList.add('bg-violet-400');
                 return;
             }
 
+            if(isPreviewMode) {
+                 timerEl.innerText = "PREVIEW";
+                 dot.classList.add('bg-yellow-500');
+                 return;
+            }
+
             if (countdownInterval) clearInterval(countdownInterval);
 
-            updateTimer(); // Run once immediately
+            updateTimer(); 
 
             countdownInterval = setInterval(updateTimer, 1000);
 
@@ -541,14 +551,8 @@
 
                 if (diff <= 0) {
                     clearInterval(countdownInterval);
-                    if (isFreeMode) {
-                         alert("Free Preview Expired. Come back in 3 hours.");
-                         localStorage.removeItem('kivro_premium_session'); // Ensure no stale state
-                         window.location.reload();
-                    } else {
-                        localStorage.removeItem('kivro_premium_session');
-                        window.location.reload();
-                    }
+                    localStorage.removeItem('kivro_premium_session');
+                    window.location.reload();
                     return;
                 }
 
@@ -665,7 +669,15 @@
                 card.className = "smooth-card group cursor-pointer animate-fade-up";
                 card.style.animationDelay = `${index * 30}ms`;
 
-                card.onclick = () => window.open(item.gameUrl, '_blank');
+                // GUARDED ONCLICK
+                card.onclick = () => {
+                    if (isPreviewMode) {
+                        showToast("🔒 Premium Required to Play");
+                        document.getElementById('free-mode-cta').scrollIntoView({behavior: 'smooth', block: 'center'});
+                        return;
+                    }
+                    window.open(item.gameUrl, '_blank');
+                };
 
                 card.innerHTML = `
                     <div class="h-36 sm:h-40 relative img-wrapper bg-black/50 m-2">
@@ -691,11 +703,15 @@
         }
 
         function copyBookmarklet() {
+            if (isPreviewMode) {
+                showToast("🔒 Premium Required to Copy");
+                return;
+            }
+
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(BOOKMARKLET_CODE).then(() => {
                     showToast("Bookmarklet Copied!");
                 }).catch(() => {
-                    // Fallback if permission denied
                     fallbackCopy();
                 });
             } else {
@@ -704,6 +720,7 @@
         }
 
         function fallbackCopy() {
+            if (isPreviewMode) return;
             const el = document.createElement('textarea');
             el.value = BOOKMARKLET_CODE;
             document.body.appendChild(el);
@@ -723,9 +740,18 @@
         function setupTabs() {
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.onclick = () => {
+                    // Check for Preview Mode restriction on Proxy and Menu
+                    const target = btn.dataset.tab;
+                    if (isPreviewMode && (target === 'Menu' || target === 'Proxy')) {
+                        showToast("🔒 Premium Required");
+                        const cta = document.getElementById('free-mode-cta');
+                        if (cta) cta.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        return;
+                    }
+
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    currentTab = btn.dataset.tab;
+                    currentTab = target;
                     
                     if (currentTab === 'Proxy') {
                         window.open('https://kivroprox1.vercel.app', '_blank');
@@ -782,7 +808,7 @@
             const s = term.toLowerCase();
             
             // Use activeGamesList instead of raw lists to respect Free Mode limits
-            const all = isFreeMode ? activeGamesList : [...gamesList, ...appsList];
+            const all = isPreviewMode ? activeGamesList : [...gamesList, ...appsList];
             
             const filtered = all.filter(item => {
                 if(!item.title.toLowerCase().includes(s)) return false;
@@ -809,19 +835,15 @@
 
         // --- SESSION RESUME ---
         window.onload = () => {
-            // Check for Free session first
-            const freeData = JSON.parse(localStorage.getItem('kivro_free_data'));
-            if(freeData) {
-                 const elapsed = Date.now() - freeData.startTime;
-                 if(elapsed < FREE_DURATION) {
-                     // Auto-resume free session if valid
-                     const session = {
-                        type: 'free',
-                        expiresAt: freeData.startTime + FREE_DURATION,
-                        games: freeData.games
-                    };
-                    enterSystem(session);
-                    return;
+            // Check for Preview session first
+            const previewSession = JSON.parse(localStorage.getItem('kivro_preview_session'));
+            if(previewSession) {
+                 // Check expiry (1 hour dummy) just for good measure
+                 if (Date.now() < previewSession.expiresAt) {
+                     enterSystem(previewSession);
+                     return;
+                 } else {
+                     localStorage.removeItem('kivro_preview_session');
                  }
             }
 
