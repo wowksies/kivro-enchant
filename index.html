@@ -222,7 +222,7 @@
                 </div>
             </div>
             <h1 class="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">ACCESS GRANTED</h1>
-            <p class="text-amber-400 font-bold tracking-widest uppercase text-sm">Welcome to Elite Membership</p>
+            <p id="welcome-subtitle" class="text-amber-400 font-bold tracking-widest uppercase text-sm">Welcome to Elite Membership</p>
         </div>
     </div>
 
@@ -619,7 +619,8 @@
                         expiresAt: data.expiresAt,
                         isUnlimited: data.isUnlimited,
                         timestamp: Date.now(),
-                        type: 'premium'
+                        type: 'premium',
+                        isAdmin: data.isAdmin // Now retrieved securely from backend
                     };
                     localStorage.setItem('kivro_premium_session', JSON.stringify(session));
                     
@@ -650,6 +651,18 @@
             const welcome = document.getElementById('vip-welcome');
             const content = document.getElementById('vip-welcome-content');
             
+            // Check for Admin status to customize message
+            if (session.isAdmin) {
+                document.querySelector('#vip-welcome-content h1').innerText = "SYSTEM OVERRIDE";
+                document.getElementById('welcome-subtitle').innerText = "Welcome, Administrator";
+                document.getElementById('welcome-subtitle').classList.replace('text-amber-400', 'text-red-500');
+            } else {
+                 // Reset to default in case previous session was admin
+                document.querySelector('#vip-welcome-content h1').innerText = "ACCESS GRANTED";
+                document.getElementById('welcome-subtitle').innerText = "Welcome to Elite Membership";
+                document.getElementById('welcome-subtitle').classList.replace('text-red-500', 'text-amber-400');
+            }
+
             // 1. Fade in the black overlay
             welcome.classList.remove('pointer-events-none', 'opacity-0');
             
@@ -667,7 +680,7 @@
                 welcome.classList.add('opacity-0', 'pointer-events-none');
                 
                 // Show a nice toast once inside
-                setTimeout(() => showToast("Welcome back, Elite Member"), 800);
+                setTimeout(() => showToast(session.isAdmin ? "Root Access Granted" : "Welcome back, Elite Member"), 800);
             }, 2500);
         }
 
@@ -705,11 +718,16 @@
                     // Full access
                     startSessionCheck(session.key);
                     
-                    // Premium UI
-                    document.getElementById('system-status-text').innerText = "Status: VIP Access Active";
-                    document.getElementById('system-status-text').classList.add('text-amber-400');
-                    document.getElementById('system-status-dot').classList.remove('bg-green-500');
-                    document.getElementById('system-status-dot').classList.add('bg-amber-500');
+                    // Check for Admin Theme Override
+                    if (session.isAdmin) {
+                        applyAdminTheme();
+                    } else {
+                        // Standard Premium UI
+                        document.getElementById('system-status-text').innerText = "Status: VIP Access Active";
+                        document.getElementById('system-status-text').classList.add('text-amber-400');
+                        document.getElementById('system-status-dot').classList.remove('bg-green-500');
+                        document.getElementById('system-status-dot').classList.add('bg-amber-500');
+                    }
                     
                     // Show Badge
                     document.getElementById('vip-status-badge').classList.remove('hidden');
@@ -719,6 +737,37 @@
                 init();
             }, 500);
         }
+        
+        function applyAdminTheme() {
+            // Change Badge
+            const badge = document.querySelector('.vip-badge');
+            if(badge) {
+                badge.innerText = "SYSTEM ADMIN";
+                badge.style.background = "linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)";
+                badge.style.webkitBackgroundClip = "text";
+                badge.style.textShadow = "0 0 20px rgba(239, 68, 68, 0.5)";
+            }
+
+            // Change Status Dot
+            const dot = document.getElementById('system-status-dot');
+            if(dot) {
+                dot.classList.remove('bg-amber-500', 'bg-green-500');
+                dot.classList.add('bg-red-600');
+            }
+            const statusText = document.getElementById('system-status-text');
+            if(statusText) {
+                statusText.innerText = "Status: Root Access Granted";
+                statusText.classList.remove('text-amber-400');
+                statusText.classList.add('text-red-500');
+            }
+
+            // Change Header Timer Dot
+            const timerDot = document.getElementById('timer-dot');
+            if(timerDot) {
+                timerDot.classList.remove('bg-amber-500');
+                timerDot.classList.add('bg-red-500');
+            }
+        }
 
         function startGlobalTimer(expiresAt, isUnlimited) {
             const timerEl = document.getElementById('header-timer');
@@ -726,7 +775,10 @@
             
             if (isUnlimited && !isPreviewMode) {
                 timerEl.innerText = "LIFETIME ∞";
-                dot.classList.add('bg-violet-400');
+                // Only style if not admin (admin handles its own style)
+                if (!document.querySelector('.vip-badge').innerText.includes("ADMIN")) {
+                     dot.classList.add('bg-violet-400');
+                }
                 return;
             }
 
@@ -837,7 +889,7 @@
             { id: 49, title: "Spiral Roll", category: "Fun", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
             { id: 50, title: "Wordle", category: "Word", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
             { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
-            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//sheepsheep/index.html" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io/sheepsheep/index.html" },
             { id: 53, title: "Game In Game", category: "Meta", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//game-inside/index.html" },
             { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
             { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//raft-war/index.html" },
@@ -1067,7 +1119,8 @@
                 if (!session.isUnlimited && session.expiresAt < Date.now()) {
                     localStorage.removeItem('kivro_premium_session');
                 } else {
-                    enterSystem(session);
+                    // CHANGED: Call showVipWelcome instead of enterSystem directly
+                    showVipWelcome(session);
                 }
             }
         };
