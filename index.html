@@ -150,6 +150,7 @@
             gap: 4px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 10px 30px -5px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
 
         .nav-btn {
@@ -160,6 +161,19 @@
             font-size: 13px;
             letter-spacing: 0.02em;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        /* COMPACT MODE FOR IPAD/TABLETS */
+        @media (max-width: 1150px) {
+            .nav-btn {
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+            .nav-pill {
+                padding: 3px;
+                gap: 2px;
+            }
         }
 
         .nav-btn.active {
@@ -388,6 +402,11 @@
                                 <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1 justify-end"><span class="w-1 h-1 bg-blue-400 rounded-full"></span> Priority Support</span>
                             </div>
                         </div>
+
+                        <!-- REFUND POLICY DISCLAIMER -->
+                         <div class="mt-3 text-center">
+                            <p class="text-[9px] text-red-400/80 font-bold uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity">⚠️ Non-Refundable Digital Keys</p>
+                         </div>
                     </div>
                 </div>
 
@@ -428,11 +447,13 @@
     <!-- MAIN APP CONTENT -->
     <div id="app-content" class="opacity-0 scale-95 transition-all duration-700 blur-sm h-screen overflow-y-auto">
         <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5">
-            <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative">
                 <div class="flex items-center gap-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
                     <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg">
                 </div>
 
+                <!-- NAVIGATION (Center - Tablet Optimized) -->
+                <!-- Removed absolute positioning on very small screens if needed, but flex + transform works if width is managed -->
                 <div class="nav-pill hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
                     <button class="nav-btn active" data-tab="Games">Library</button>
                     <button class="nav-btn" data-tab="Apps">Apps</button>
@@ -441,15 +462,18 @@
                     <button class="nav-btn" data-tab="Favs">Saved</button>
                 </div>
 
+                <!-- RIGHT CONTROLS -->
                 <div class="flex items-center gap-3">
-                    <!-- Premium Indicator -->
-                    <div id="vip-status-badge" class="hidden md:flex items-center gap-2 mr-2">
-                        <span class="text-[10px] font-black vip-badge tracking-widest uppercase">VIP MEMBER</span>
+                    
+                    <!-- VIP Badge (Resizes on Tablet, does not hide) -->
+                    <div id="vip-status-badge" class="flex items-center gap-2 mr-2">
+                        <span class="text-[10px] md:text-[8px] font-black vip-badge tracking-widest uppercase truncate max-w-[80px] md:max-w-none">VIP MEMBER</span>
                     </div>
 
-                    <div class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5">
+                    <!-- Timer (Resizes on Tablet, does not hide) -->
+                    <div class="hidden md:flex items-center gap-2 px-4 md:px-2 py-2 md:py-1 rounded-full bg-white/5 border border-white/5">
                         <div id="timer-dot" class="status-dot"></div>
-                        <span id="header-timer" class="text-[10px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
+                        <span id="header-timer" class="text-[10px] md:text-[9px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
                     </div>
 
                     <!-- MASK / CLOAK BUTTON -->
@@ -1094,7 +1118,7 @@
             { id: 49, title: "Spiral Roll", category: "Fun", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
             { id: 50, title: "Wordle", category: "Word", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
             { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
-            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/" },
             { id: 53, title: "Game In Game", category: "Meta", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//game-inside/index.html" },
             { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
             { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//raft-war/index.html" },
