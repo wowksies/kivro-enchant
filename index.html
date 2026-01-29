@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Kivro • Premium</title>
+    <title>Kivro • Elite</title>
     <meta name="description" content="Exclusive unblocked library.">
 
     <!-- PWA Meta -->
@@ -28,6 +28,7 @@
                     colors: {
                         void: '#050505',
                         panel: '#0f0f0f',
+                        gold: '#fbbf24',
                         accent: {
                             DEFAULT: '#8b5cf6',
                             glow: '#a78bfa',
@@ -37,6 +38,11 @@
                         'float': 'float 8s ease-in-out infinite',
                         'blob': 'blob 10s infinite',
                         'fade-up': 'fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'shimmer': 'shimmer 2.5s linear infinite',
+                        'pulse-gold': 'pulseGold 2s infinite',
+                        'entrance': 'entrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'scan': 'scan 3s ease-in-out infinite',
+                        'shine': 'shine 1.5s infinite',
                     },
                     keyframes: {
                         float: {
@@ -52,6 +58,25 @@
                         fadeUp: {
                             '0%': { opacity: 0, transform: 'translateY(20px)' },
                             '100%': { opacity: 1, transform: 'translateY(0)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '200% 0' },
+                            '100%': { backgroundPosition: '-200% 0' }
+                        },
+                        pulseGold: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.4)' },
+                            '70%': { boxShadow: '0 0 0 10px rgba(251, 191, 36, 0)' }
+                        },
+                        entrance: {
+                            '0%': { opacity: 0, transform: 'scale(0.95)' },
+                            '100%': { opacity: 1, transform: 'scale(1)' }
+                        },
+                        scan: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
+                        },
+                        shine: {
+                            '100%': { left: '125%' }
                         }
                     }
                 }
@@ -88,22 +113,22 @@
         .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #701a75; animation-delay: -10s; opacity: 0.3; }
 
         .smooth-card {
-            background: rgba(20, 20, 20, 0.4);
+            background: rgba(20, 20, 20, 0.6);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 28px;
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
         .smooth-card:hover {
             transform: translateY(-8px) scale(1.02);
-            background: rgba(40, 40, 40, 0.6);
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 92, 246, 0.15);
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(251, 191, 36, 0.3); /* Gold tint on hover */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.1);
         }
 
         .img-wrapper {
@@ -139,31 +164,30 @@
             box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
         }
 
-        .modal-surface {
-            background: rgba(15, 15, 15, 0.85);
-            backdrop-filter: blur(32px);
-            -webkit-backdrop-filter: blur(32px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9);
+        .vip-badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
-        .liquid-input {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            transition: all 0.3s ease;
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
         }
-        .liquid-input:focus {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-            outline: none;
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
         }
-
-        .status-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: #4ade80; box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+        .shine-effect:hover::before {
+            animation: shine 0.75s;
         }
 
         ::-webkit-scrollbar { width: 0px; background: transparent; }
@@ -171,16 +195,17 @@
         /* Notification Toast */
         #toast {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: rgba(139, 92, 246, 0.9); backdrop-filter: blur(10px);
-            padding: 12px 24px; border-radius: 12px; color: white; font-weight: bold; font-size: 14px;
+            background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 28px; border-radius: 16px; color: white; font-weight: bold; font-size: 14px;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 99999;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 10px;
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
-        
-        .tab-hidden { display: none !important; }
     </style>
 </head>
-<body class="antialiased selection:bg-violet-500/30 selection:text-white overflow-hidden" id="main-body">
+<body class="antialiased selection:bg-gold/30 selection:text-white overflow-hidden" id="main-body">
 
     <div class="liquid-bg">
         <div class="blob-1"></div>
@@ -188,94 +213,201 @@
         <div class="blob-3"></div>
     </div>
 
+    <!-- VIP WELCOME OVERLAY -->
+    <div id="vip-welcome" class="fixed inset-0 z-[11000] bg-black flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-1000">
+        <div class="text-center transform scale-95 transition-transform duration-1000" id="vip-welcome-content">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 p-[2px] animate-pulse-gold">
+                <div class="w-full h-full rounded-full bg-black flex items-center justify-center">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12">
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">ACCESS GRANTED</h1>
+            <p class="text-amber-400 font-bold tracking-widest uppercase text-sm">Welcome to Elite Membership</p>
+        </div>
+    </div>
+
     <!-- SITE LOCK -->
-    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center transition-all duration-700 overflow-y-auto">
+    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center overflow-y-auto overflow-x-hidden transition-all duration-700">
+        <!-- Background Effects -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-[100px] animate-blob"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-[100px] animate-blob" style="animation-delay: -2s;"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/30 rounded-full blur-[120px] animate-blob"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-600/20 rounded-full blur-[120px] animate-blob" style="animation-delay: -2s;"></div>
         </div>
 
-        <div class="relative z-10 w-full max-w-sm p-6 text-center animate-fade-up my-auto">
-            <div class="w-16 h-16 bg-white/5 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 shadow-2xl border border-white/10 animate-float">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-lg opacity-80">
-            </div>
+        <div class="relative z-10 w-full max-w-4xl p-4 md:p-8 flex flex-col md:flex-row gap-8 items-stretch animate-fade-up">
             
-            <h1 class="text-xl font-bold text-white mb-1 tracking-tight">Kivro Premium</h1>
-            <p class="text-[10px] text-zinc-500 mb-4 uppercase tracking-widest">Secure Access Required</p>
-
-            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 mb-6 text-left">
-                <h4 class="text-[10px] font-bold text-zinc-500 uppercase mb-3 tracking-tighter">Pricing Plans</h4>
-                <div class="space-y-2 mb-4">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-zinc-300">1 Day Access</span>
-                            <span class="text-[9px] text-red-400 ml-1 font-bold animate-pulse">15 LEFT</span>
-                        </div>
-                        <span class="text-xs font-bold text-white">3€</span>
+            <!-- LEFT COLUMN: Sales Pitch (Persuasion) -->
+            <div class="flex-1 bg-zinc-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden group hover:border-amber-500/30 transition-colors">
+                <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 animate-pulse">
+                    HIGH DEMAND
+                </div>
+                
+                <div class="flex items-center gap-4 mb-6">
+                     <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10 shadow-lg">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-8 h-8 opacity-90">
                     </div>
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-zinc-300">7 Day Access</span>
-                            <span class="text-[9px] text-red-400 ml-1 font-bold animate-pulse">10 LEFT</span>
+                    <div>
+                        <h1 class="text-2xl font-black text-white tracking-tight">KIVRO <span class="text-amber-400">ELITE</span></h1>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Servers Operational</span>
                         </div>
-                        <span class="text-xs font-bold text-white">7€</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-zinc-300">2 Week Access</span>
-                            <span class="text-[9px] text-red-400 ml-1 font-bold animate-pulse">5 LEFT</span>
-                        </div>
-                        <span class="text-xs font-bold text-white">12€</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-zinc-300">Lifetime Access</span>
-                            <span class="text-[9px] text-red-400 ml-1 font-bold animate-pulse">3 LEFT</span>
-                        </div>
-                        <span class="text-xs font-bold text-violet-400">15€</span>
                     </div>
                 </div>
 
-                <!-- ADDED PURCHASE INFO SECTION -->
-                <div class="pt-3 border-t border-white/10 space-y-2">
-                     <div class="flex items-start gap-3">
-                        <div class="mt-0.5 w-4 h-4 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0">
-                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        </div>
+                <div class="space-y-4 mb-8 flex-1">
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
                         <div>
-                            <p class="text-[10px] font-bold text-zinc-500 uppercase">Payment</p>
-                            <p class="text-[10px] text-white font-medium">Cash Only (In Person)</p>
+                            <h3 class="text-sm font-bold text-white">Unrestricted Library</h3>
+                            <p class="text-xs text-zinc-500">Premium access to all games and apps.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Stealth Proxy V2</h3>
+                            <p class="text-xs text-zinc-500">Undetectable browsing technology.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">VIP Tools Menu</h3>
+                            <p class="text-xs text-zinc-500">Exclusive cheats and utilities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Ticker (UPDATED) -->
+                <div class="bg-black/40 rounded-xl p-3 border border-white/5 flex items-center gap-3 mb-6 backdrop-blur-md relative overflow-hidden group hover:border-white/10 transition-colors">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="flex -space-x-2 relative z-10">
+                         <!-- Believable Avatars -->
+                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">JD</div>
+                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">MK</div>
+                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">AL</div>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-[10px] text-zinc-400 leading-tight">
+                            <span class="text-white font-bold">8 users</span> upgraded today.
+                        </p>
+                         <p class="text-[8px] text-amber-500 font-bold flex items-center gap-1 mt-0.5 opacity-80">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Verified Purchase
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Purchase Info -->
+                 <div class="pt-4 border-t border-white/10">
+                     <p class="text-[10px] text-zinc-500 uppercase font-bold mb-3 tracking-wider">Purchase Key</p>
+                     <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                            <p class="text-[10px] text-zinc-400 mb-1">Method</p>
+                            <p class="text-xs font-bold text-white">Cash (In-Person)</p>
+                        </div>
+                        <a href="mailto:kayazissigma@gmail.com" class="bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 hover:bg-amber-500/20 transition-colors group/link cursor-pointer block">
+                            <p class="text-[10px] text-amber-300 mb-1">Contact for Key</p>
+                            <div class="flex items-center gap-1 text-xs font-bold text-amber-400">
+                                <span>Email Me</span>
+                                <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </div>
+                        </a>
+                     </div>
+                 </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Pricing & Login -->
+            <div class="w-full md:w-80 flex flex-col gap-4">
+                
+                <!-- Pricing Stack -->
+                <div class="bg-zinc-900/90 backdrop-blur-xl border border-white/10 rounded-3xl p-2">
+                    <div class="space-y-1">
+                        <!-- 1 Day -->
+                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-default">
+                            <div>
+                                <div class="text-xs font-bold text-zinc-400">1 Day Pass</div>
+                                <div class="text-[9px] text-zinc-600">Trial</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-zinc-300">3€</div>
+                            </div>
+                        </div>
+                         <!-- 7 Days -->
+                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-default border border-transparent hover:border-white/5">
+                            <div>
+                                <div class="text-xs font-bold text-zinc-300">7 Day Pass</div>
+                                <div class="text-[9px] text-zinc-500">Standard</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-white">7€</div>
+                            </div>
+                        </div>
+
+                         <!-- THE HERO: 2 WEEKS -->
+                        <div class="relative overflow-hidden rounded-xl border border-amber-500/40 p-3 group cursor-pointer transition-all hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] mt-1">
+                            <!-- Shimmer Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-yellow-500/20 to-amber-500/10 animate-shimmer bg-[length:200%_100%]"></div>
+                            
+                            <!-- Badge -->
+                            <div class="absolute top-0 right-0 bg-amber-500 text-black text-[8px] font-extrabold px-2 py-0.5 rounded-bl-lg shadow-lg z-10 tracking-wide">VIP CHOICE</div>
+                            
+                            <div class="flex items-center justify-between relative z-10">
+                                <div class="flex items-center gap-3">
+                                     <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg text-white">
+                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-white">2 Weeks Elite</div>
+                                        <div class="text-[9px] text-amber-200/80 font-medium">Full Priority Access</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-extrabold text-white text-shadow-sm">12€</div>
+                                </div>
+                            </div>
+                            <!-- Features specifically for this plan -->
+                            <div class="relative z-10 mt-2 pt-2 border-t border-amber-500/20 grid grid-cols-2 gap-1">
+                                <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1"><span class="w-1 h-1 bg-green-400 rounded-full"></span> 100% Uptime</span>
+                                <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1 justify-end"><span class="w-1 h-1 bg-blue-400 rounded-full"></span> Priority Support</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auth Box (UPDATED ANIMATIONS) -->
+                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 flex flex-col gap-3 shadow-2xl h-full justify-center relative overflow-hidden">
+                    <div class="text-center mb-1 relative z-10">
+                        <div class="text-xs font-bold text-white uppercase tracking-widest flex items-center justify-center gap-2">
+                             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            Secure Access
                         </div>
                     </div>
                     
-                    <a href="mailto:kayazissigma@gmail.com" class="flex items-start gap-3 group hover:bg-white/5 -mx-2 p-2 rounded-lg transition-colors">
-                        <div class="mt-0.5 w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
-                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold text-zinc-500 uppercase">Purchase Key</p>
-                            <p class="text-[10px] text-blue-300 font-medium underline decoration-blue-500/30 underline-offset-2 break-all">kayazissigma@gmail.com</p>
-                        </div>
-                    </a>
+                    <div class="relative group z-10">
+                        <!-- Laser Scan Effect on Input -->
+                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-[scan_2s_linear_infinite]"></div>
+                        
+                        <input type="password" id="site-key-input" 
+                            class="w-full bg-black/40 border-2 border-white/10 rounded-xl py-3 px-4 text-center text-white text-lg font-mono tracking-[0.3em] placeholder-zinc-700 focus:outline-none focus:border-amber-500 focus:bg-white/5 focus:shadow-[0_0_20px_rgba(245,158,11,0.2)] focus:ring-2 focus:ring-amber-500/20 transition-all relative z-10"
+                            placeholder="XXX-XXX">
+                    </div>
+
+                    <div id="site-key-error" class="text-center text-red-500 text-[10px] font-bold h-4 opacity-0 transition-opacity uppercase tracking-widest z-10">Invalid Key</div>
+                    
+                    <button onclick="unlockSite()" class="shine-effect w-full py-3.5 rounded-xl bg-white text-black font-extrabold text-xs active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 group z-10">
+                        <span>UNLOCK SYSTEM</span>
+                        <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </button>
+                    
+                    <button onclick="startVisualPreview()" class="w-full py-2 rounded-xl text-zinc-500 font-bold text-[10px] hover:text-white transition-colors z-10">
+                        Just Browsing? <span class="underline decoration-zinc-700 underline-offset-2 hover:decoration-white">View Preview</span>
+                    </button>
                 </div>
-            </div>
 
-            <div class="relative group">
-                <input type="password" id="site-key-input" 
-                    class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-center text-white text-base tracking-[0.5em] placeholder-zinc-700 focus:outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all shadow-lg"
-                    placeholder="KEY">
             </div>
-
-            <div id="site-key-error" class="mt-3 text-red-400 text-[10px] font-bold opacity-0 transition-opacity uppercase tracking-widest">ACCESS DENIED</div>
-            
-            <div class="flex gap-2 mt-4">
-                <button onclick="unlockSite()" class="flex-1 py-3 rounded-xl bg-white text-black font-bold text-xs hover:bg-violet-100 transition-all shadow-xl">
-                    Initialize System
-                </button>
-            </div>
-            <button onclick="startVisualPreview()" class="w-full mt-2 py-2.5 rounded-xl bg-white/5 text-zinc-400 font-bold text-[10px] hover:bg-white/10 hover:text-white transition-all border border-white/5">
-                View Library (Visual Preview)
-            </button>
         </div>
     </div>
 
@@ -296,6 +428,11 @@
                 </div>
 
                 <div class="flex items-center gap-3">
+                    <!-- Premium Indicator -->
+                    <div id="vip-status-badge" class="hidden md:flex items-center gap-2 mr-2">
+                        <span class="text-[10px] font-black vip-badge tracking-widest uppercase">VIP MEMBER</span>
+                    </div>
+
                     <div class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5">
                         <div id="timer-dot" class="status-dot"></div>
                         <span id="header-timer" class="text-[10px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
@@ -340,8 +477,8 @@
                 
                 <!-- NEW PURCHASE CARD -->
                 <div id="free-mode-cta" class="hidden mt-10 max-w-md mx-auto animate-fade-up">
-                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600/20 to-black border border-violet-500/30 p-8 backdrop-blur-md shadow-2xl">
-                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-violet-500/30 blur-3xl rounded-full"></div>
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600/20 to-black border border-amber-500/30 p-8 backdrop-blur-md shadow-2xl">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/30 blur-3xl rounded-full"></div>
                         
                         <div class="relative z-10 text-left">
                             <h3 class="text-2xl font-extrabold text-white mb-2 text-center">Get Premium Access</h3>
@@ -381,7 +518,7 @@
             <!-- DEDICATED MENU PAGE -->
             <div id="menu-view" class="hidden max-w-2xl mx-auto animate-fade-up">
                 <div class="text-center mb-12">
-                    <div class="w-24 h-24 bg-violet-500/10 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+                    <div class="w-24 h-24 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(251,191,36,0.1)] border border-white/10">
                         <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 opacity-80">
                     </div>
                     <h2 class="text-4xl font-extrabold text-white mb-4">Kivro Menu V2</h2>
@@ -389,12 +526,12 @@
                 </div>
 
                 <div class="bg-white/5 border border-white/10 rounded-3xl p-8 mb-8 backdrop-blur-sm relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 text-center">
                         <h3 class="text-lg font-bold text-white mb-2">Installation Script</h3>
                         <p class="text-xs text-zinc-500 mb-6 uppercase tracking-widest">Universal Bookmarklet</p>
                         
-                        <button onclick="copyBookmarklet()" class="w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-violet-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2">
+                        <button onclick="copyBookmarklet()" class="w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-amber-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                             Tap to Copy Code
                         </button>
@@ -427,7 +564,10 @@
         </main>
     </div>
 
-    <div id="toast">Code Copied!</div>
+    <div id="toast">
+        <svg class="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="toast-msg">Action Completed</span>
+    </div>
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxEgIRNKug7X2GY6dl6G8l0eYvDWrheyTOm3b5vPHYwNyVnhGbMuvNnEO20Kz57NMjA/exec";
@@ -438,6 +578,7 @@
         let currentTab = 'Games';
         let countdownInterval = null;
         let isPreviewMode = false;
+        let sessionCheckInterval = null; // POLLING CHECK
 
         // UPDATED BOOKMARKLET: Uses raw.githack.com to prevent MIME type blocking
         const BOOKMARKLET_CODE = "javascript:(function(){if(document.getElementById('kivro-menu-v2'))return;const MENU_ITEMS=[{name:\"🦄 Blooket Cheats (GUI)\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/Bookletkiv/main/gui.js';document.body.appendChild(s);alert('Blooket GUI Injecting...');}},{name:\"👆 iPad Autoclicker (Target)\",action:function(){if(window.kivroAC){clearInterval(window.kivroAC);window.kivroAC=null;var t=document.getElementById('kivro-ac-target');if(t)t.remove();alert('Autoclicker: OFF');}else{var t=document.createElement('div');t.id='kivro-ac-target';t.style.cssText='position:fixed;top:50%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:4px solid rgba(255,0,60,0.6);border-radius:50%;z-index:9999999999;box-shadow:0 0 15px rgba(255,0,60,0.4);pointer-events:none;transition:transform 0.1s;';var h=document.createElement('div');h.style.cssText='position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:rgba(255,0,60,0.9);border-radius:50%;cursor:move;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;font-weight:bold;';h.innerText='✢';t.appendChild(h);var c=document.createElement('div');c.style.cssText='position:absolute;top:50%;left:50%;width:4px;height:4px;background:red;transform:translate(-50%,-50%);border-radius:50%;';t.appendChild(c);document.body.appendChild(t);let d=false;const mv=(e)=>{if(!d)return;e.preventDefault();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;t.style.left=cx+'px';t.style.top=cy+'px';};const dn=(e)=>{d=true;e.preventDefault();t.style.transform='scale(1.1)';};const up=()=>{d=false;t.style.transform='scale(1)';};h.addEventListener('mousedown',dn);h.addEventListener('touchstart',dn);document.addEventListener('mousemove',mv);document.addEventListener('touchmove',mv);document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp);alert('Autoclicker: ON. Drag the red knob to move.');window.kivroAC=setInterval(function(){var r=t.getBoundingClientRect();var el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);if(el&&el!==t&&el!==h&&el!==c){el.click();el.dispatchEvent(new MouseEvent('mousedown'));el.dispatchEvent(new MouseEvent('mouseup'));}},50);}}},{name:\"🌊 History Flooder\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/HistoryFlooder.js';document.body.appendChild(s);alert('History Flooder Loading...');}},{name:\"📺 Fullscreen Anywhere\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/InstantFullscreen.js';document.body.appendChild(s);alert('Enabling Fullscreen...');}}];const css=`#kivro-menu-v2{position:fixed;top:100px;left:100px;width:260px;display:flex;flex-direction:column;background:rgba(20,20,30,0.65);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,0.15);border-top:1px solid rgba(255,255,255,0.3);border-left:1px solid rgba(255,255,255,0.3);border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,0.5),inset 0 0 20px rgba(255,255,255,0.05);font-family:system-ui,-apple-system,sans-serif;color:white;z-index:2147483647;transition:width 0.3s,height 0.3s,border-radius 0.3s,background 0.3s;overflow:hidden;user-select:none}#kivro-menu-v2.minimized{width:60px;height:60px;border-radius:50%;background:url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png');background-size:cover;background-position:center;box-shadow:0 0 20px rgba(139,92,246,0.6);border:2px solid rgba(255,255,255,0.5);cursor:pointer}#kivro-menu-v2.minimized>*{display:none !important}.kv-header{padding:16px;background:linear-gradient(to right,rgba(255,255,255,0.05),transparent);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}#kivro-menu-v2.minimized .kv-header{display:none}.kv-title{font-weight:800;font-size:12px;letter-spacing:1.5px;color:#a78bfa;text-transform:uppercase}.kv-controls{display:flex;gap:8px}.kv-btn-ctrl{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;font-family:monospace}.kv-body{padding:12px;max-height:400px;overflow-y:auto}.kv-btn{width:100%;padding:14px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:14px;color:#e4e4e7;font-size:13px;font-weight:600;text-align:left;cursor:pointer;transition:all 0.2s ease}.kv-btn:active{transform:scale(0.98);background:rgba(139,92,246,0.2)}`;const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);const ui=document.createElement('div');ui.id='kivro-menu-v2';ui.innerHTML='<div class=\"kv-header\"><span class=\"kv-title\">KIVRO PREMIUM</span><div class=\"kv-controls\"><div id=\"kv-min\" class=\"kv-btn-ctrl\">_</div><div id=\"kv-close\" class=\"kv-btn-ctrl\">X</div></div></div><div class=\"kv-body\"></div>';document.body.appendChild(ui);const body=ui.querySelector('.kv-body');MENU_ITEMS.forEach(item=>{const btn=document.createElement('button');btn.className='kv-btn';btn.innerText=item.name;const run=(e)=>{e.stopPropagation();try{item.action()}catch(e){alert(e)}};btn.onclick=run;btn.ontouchend=run;body.appendChild(btn)});let isMin=false;let isDragging=false;let hasMoved=false;let startX,startY,initX,initY;const minBtn=ui.querySelector('#kv-min');const closeBtn=ui.querySelector('#kv-close');const header=ui.querySelector('.kv-header');const doMin=(e)=>{e.stopPropagation();e.preventDefault();isMin=true;ui.classList.add('minimized')};const doClose=(e)=>{e.stopPropagation();e.preventDefault();ui.remove();style.remove()};minBtn.ontouchend=doMin;minBtn.onclick=doMin;closeBtn.ontouchend=doClose;closeBtn.onclick=doClose;const stopProp=(e)=>{e.stopPropagation()};minBtn.ontouchstart=stopProp;minBtn.onmousedown=stopProp;closeBtn.ontouchstart=stopProp;closeBtn.onmousedown=stopProp;const onDown=(e)=>{if(e.target.closest('.kv-controls'))return;isDragging=true;hasMoved=false;const t=e.touches?e.touches[0]:e;startX=t.clientX;startY=t.clientY;initX=ui.offsetLeft;initY=ui.offsetTop;ui.style.transition='none'};const onMove=(e)=>{if(!isDragging)return;const t=e.touches?e.touches[0]:e;const dx=t.clientX-startX;const dy=t.clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5)hasMoved=true;ui.style.left=(initX+dx)+'px';ui.style.top=(initY+dy)+'px';if(e.cancelable)e.preventDefault()};const onUp=(e)=>{if(!isDragging)return;isDragging=false;ui.style.transition='width 0.3s, height 0.3s, border-radius 0.3s, background 0.3s';if(isMin&&!hasMoved){isMin=false;ui.classList.remove('minimized')}};ui.addEventListener('mousedown',onDown);ui.addEventListener('touchstart',onDown,{passive:false});document.addEventListener('mousemove',onMove);document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp)})();void(0);";
@@ -454,7 +595,7 @@
         async function unlockSite() {
             const input = document.getElementById('site-key-input');
             const error = document.getElementById('site-key-error');
-            const btn = document.querySelector('#site-lock button');
+            const btn = document.querySelector('.bg-black\\/60 button'); 
             const key = input.value.trim();
             const deviceId = getDeviceId();
 
@@ -463,11 +604,13 @@
                 return;
             }
 
-            btn.innerText = "VERIFYING...";
+            // Simple loading state
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<span>VERIFYING...</span>";
             btn.disabled = true;
 
             try {
-                const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}`);
+                const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}&action=login`);
                 const data = await response.json();
 
                 if (data.valid) {
@@ -479,15 +622,19 @@
                         type: 'premium'
                     };
                     localStorage.setItem('kivro_premium_session', JSON.stringify(session));
-                    enterSystem(session);
+                    
+                    // Show Welcome Sequence before entering
+                    showVipWelcome(session);
+
                 } else {
                     showError(data.message || "Invalid Access");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
                 }
             } catch (err) {
                 showError("Server Error");
                 console.error(err);
-            } finally {
-                btn.innerText = "Initialize System";
+                btn.innerHTML = originalText;
                 btn.disabled = false;
             }
 
@@ -497,16 +644,39 @@
                 setTimeout(() => error.classList.add('opacity-0'), 3000);
             }
         }
+        
+        // --- NEW: VIP WELCOME ANIMATION ---
+        function showVipWelcome(session) {
+            const welcome = document.getElementById('vip-welcome');
+            const content = document.getElementById('vip-welcome-content');
+            
+            // 1. Fade in the black overlay
+            welcome.classList.remove('pointer-events-none', 'opacity-0');
+            
+            // 2. Animate content entrance
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('animate-entrance');
+            }, 100);
+
+            // 3. After 2.5 seconds, enter system and fade out overlay
+            setTimeout(() => {
+                enterSystem(session);
+                
+                // Fade out welcome screen
+                welcome.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Show a nice toast once inside
+                setTimeout(() => showToast("Welcome back, Elite Member"), 800);
+            }, 2500);
+        }
 
         // --- PREVIEW MODE LOGIC ---
         function startVisualPreview() {
-            // Visual preview only - no functional access
             const session = {
                 type: 'preview',
-                expiresAt: Date.now() + 3600000 // 1 hour dummy session for state
+                expiresAt: Date.now() + 3600000 
             };
-            // Do NOT save to localStorage so refresh resets to lock screen
-            // localStorage.setItem('kivro_preview_session', JSON.stringify(session));
             enterSystem(session);
         }
 
@@ -529,11 +699,20 @@
                     // Show Buy Card
                     document.getElementById('free-mode-cta').classList.remove('hidden');
                     
-                    // Remove hidden restriction on buttons for visibility (logic restricts click)
-                    // Note: In previous version these had class additions, now we just don't hide them via JS
-                    // They are visible by default in HTML
+                    // Hide Premium Badges
+                    document.getElementById('vip-status-badge').classList.add('hidden');
                 } else {
                     // Full access
+                    startSessionCheck(session.key);
+                    
+                    // Premium UI
+                    document.getElementById('system-status-text').innerText = "Status: VIP Access Active";
+                    document.getElementById('system-status-text').classList.add('text-amber-400');
+                    document.getElementById('system-status-dot').classList.remove('bg-green-500');
+                    document.getElementById('system-status-dot').classList.add('bg-amber-500');
+                    
+                    // Show Badge
+                    document.getElementById('vip-status-badge').classList.remove('hidden');
                 }
 
                 startGlobalTimer(session.expiresAt, session.isUnlimited);
@@ -582,6 +761,31 @@
                 
                 if (diff < 3600000) dot.style.backgroundColor = '#f87171';
             }
+        }
+        
+        // --- NEW: SESSION VERIFICATION POLLING ---
+        function startSessionCheck(key) {
+            if (sessionCheckInterval) clearInterval(sessionCheckInterval);
+            
+            // Check every 30 seconds
+            sessionCheckInterval = setInterval(async () => {
+                if(isPreviewMode) return;
+                
+                const deviceId = getDeviceId();
+                try {
+                    const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}&action=verify`);
+                    const data = await response.json();
+                    
+                    if (!data.valid) {
+                        console.warn("Session invalid:", data.message);
+                        localStorage.removeItem('kivro_premium_session');
+                        alert("Session Terminated: " + (data.message || "Key used on another device"));
+                        window.location.reload();
+                    }
+                } catch (e) {
+                    console.error("Session check skipped due to network", e);
+                }
+            }, 30000); 
         }
 
         const gamesList = [
@@ -633,7 +837,7 @@
             { id: 49, title: "Spiral Roll", category: "Fun", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
             { id: 50, title: "Wordle", category: "Word", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
             { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
-            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//sheepsheep/index.html" },
             { id: 53, title: "Game In Game", category: "Meta", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//game-inside/index.html" },
             { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
             { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//raft-war/index.html" },
@@ -711,7 +915,7 @@
                             <h3 class="text-sm font-bold text-zinc-100 truncate max-w-[120px]">${item.title}</h3>
                             <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-wide mt-0.5">${item.category}</p>
                         </div>
-                        <button onclick="toggleFav(event, ${item.id})" class="text-zinc-600 hover:text-yellow-400 transition-colors ${isFav ? 'text-yellow-400' : ''}">
+                        <button onclick="toggleFav(event, ${item.id})" class="text-zinc-600 hover:text-amber-400 transition-colors ${isFav ? 'text-amber-400' : ''}">
                             <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                         </button>
                     </div>
@@ -750,7 +954,8 @@
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
-            toast.innerText = msg;
+            const txt = document.getElementById('toast-msg');
+            txt.innerText = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
