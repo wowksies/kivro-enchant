@@ -6,14 +6,18 @@
     <title>Kivro • Elite</title>
     <meta name="description" content="Exclusive unblocked library.">
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIktpdnJvIEVsaXRlIiwKICAic2hvcnRfbmFtZSI6ICJLaXZybyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0tBWUFaenovQ05NLUdhbWVzL21haW4vTG9nb2FjdHVhbC5wbmciLAogICAgInNpemVzIjogIjUxMng1MTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
+
     <!-- PWA Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Kivro Elite">
     <meta name="theme-color" content="#000000">
 
     <!-- Icons -->
     <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
+    <link id="dynamic-favicon" rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -203,6 +207,16 @@
             display: flex; align-items: center; gap: 10px;
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* Install/Cloak Popup Styles */
+        .select-icon {
+            transition: all 0.3s ease;
+        }
+        .select-icon.selected {
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-gold/30 selection:text-white overflow-hidden" id="main-body">
@@ -437,7 +451,13 @@
                         <div id="timer-dot" class="status-dot"></div>
                         <span id="header-timer" class="text-[10px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
                     </div>
-                    <button id="search-toggle" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-zinc-400">
+
+                    <!-- MASK / CLOAK BUTTON -->
+                    <button onclick="openCloakModal()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                    </button>
+                    
+                    <button id="search-toggle" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </button>
                     
@@ -569,6 +589,76 @@
         <span id="toast-msg">Action Completed</span>
     </div>
 
+    <!-- CLOAK / INSTALL POPUP -->
+    <div id="cloak-modal" class="fixed inset-0 z-[12000] bg-black/80 backdrop-blur-md flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#141414]/90 border border-white/10 rounded-2xl p-6 shadow-2xl max-w-lg w-[92%] relative overflow-hidden transform scale-95 transition-transform duration-300">
+            <!-- Close Button -->
+            <button onclick="closeCloakModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">App Disguise</h2>
+                <p class="text-zinc-400 text-sm">Choose an icon to cloak the app on your home screen.</p>
+            </div>
+
+            <!-- Icon Selector -->
+            <div class="grid grid-cols-3 gap-4 mb-8">
+                 <!-- Teams -->
+                 <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png', 'Teams')">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-indigo-500 hover:scale-105 transition-all select-icon">
+                    <span class="text-xs font-bold text-zinc-500 group-hover:text-white">Teams</span>
+                 </div>
+                 <!-- Kahoot -->
+                 <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png', 'Kahoot!')">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-purple-500 hover:scale-105 transition-all select-icon">
+                    <span class="text-xs font-bold text-zinc-500 group-hover:text-white">Kahoot!</span>
+                 </div>
+                 <!-- OneNote (Default) -->
+                 <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png', 'OneNote')">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-pink-500 hover:scale-105 transition-all select-icon">
+                    <span class="text-xs font-bold text-zinc-500 group-hover:text-white">OneNote</span>
+                 </div>
+            </div>
+
+            <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center">
+                <p class="text-xs text-zinc-400 mb-2 font-bold uppercase tracking-wide">Installation Steps</p>
+                <div class="flex items-center justify-center gap-2 text-sm text-zinc-300">
+                    <span>1. Pick Icon</span> <span class="text-zinc-600">→</span> <span>2. Tap Share <svg class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg></span> <span class="text-zinc-600">→</span> <span>3. Add to Home</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUTO INSTALL PROMPT (Visible on both pages via Z-Index) -->
+    <div id="install-modal" class="fixed bottom-0 left-0 right-0 z-[12000] p-4 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
+        <div class="bg-[#141414]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl max-w-md mx-auto relative overflow-hidden">
+            <!-- Close Button -->
+            <button onclick="dismissInstall()" class="absolute top-3 right-3 text-zinc-500 hover:text-white">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div class="flex gap-4">
+                 <img id="install-icon-preview" src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-14 h-14 rounded-xl shadow-lg">
+                 <div class="flex-1">
+                     <h3 class="text-white font-bold text-lg leading-tight mb-1">Install App</h3>
+                     <p id="install-text" class="text-zinc-400 text-xs leading-relaxed">
+                        Install Kivro Elite for fullscreen & better performance.
+                     </p>
+                     <!-- iOS Instructions -->
+                     <div id="ios-instructions" class="hidden mt-3 text-xs text-amber-400 font-bold flex items-center gap-2">
+                         <span>Tap <svg class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg> then "Add to Home Screen" <svg class="w-4 h-4 inline bg-white/20 rounded ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
+                     </div>
+                     <!-- Android/Desktop Button -->
+                     <button id="install-btn" class="hidden mt-3 w-full py-2 bg-white text-black font-bold rounded-lg text-xs hover:bg-zinc-200 transition-colors" onclick="triggerInstall()">Add to Home Screen</button>
+                     <!-- Manual Instructions Fallback -->
+                     <div id="manual-install" class="hidden mt-3 text-xs text-zinc-500 font-medium">
+                        Open browser menu and select "Add to Home Screen" or "Install App".
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxEgIRNKug7X2GY6dl6G8l0eYvDWrheyTOm3b5vPHYwNyVnhGbMuvNnEO20Kz57NMjA/exec";
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
@@ -579,6 +669,121 @@
         let countdownInterval = null;
         let isPreviewMode = false;
         let sessionCheckInterval = null; // POLLING CHECK
+
+        // --- CLOAKING LOGIC ---
+        function openCloakModal() {
+            const modal = document.getElementById('cloak-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCloakModal() {
+            const modal = document.getElementById('cloak-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function setCloak(iconUrl, appName) {
+            // 1. Update Apple Touch Icon
+            const appleIcon = document.getElementById('apple-touch-icon');
+            if(appleIcon) appleIcon.href = iconUrl;
+
+            // 2. Update Favicon (for desktop tabs)
+            const favIcon = document.getElementById('dynamic-favicon');
+            if(favIcon) favIcon.href = iconUrl;
+
+            // 3. Update Document Title
+            document.title = appName;
+
+            // 4. Update Apple Web App Title (Meta)
+            let appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+            if (!appleTitleMeta) {
+                appleTitleMeta = document.createElement('meta');
+                appleTitleMeta.setAttribute('name', 'apple-mobile-web-app-title');
+                document.head.appendChild(appleTitleMeta);
+            }
+            appleTitleMeta.setAttribute('content', appName);
+
+            // 5. Update Preview in Install Modal (if visible)
+            document.getElementById('install-icon-preview').src = iconUrl;
+
+            // 6. UI Feedback
+            showToast(`Disguised as ${appName}`);
+            closeCloakModal();
+        }
+
+        // --- INSTALL POPUP LOGIC ---
+        let deferredPrompt;
+        const installModal = document.getElementById('install-modal');
+        const iosText = document.getElementById('ios-instructions');
+        const installBtn = document.getElementById('install-btn');
+        const manualText = document.getElementById('manual-install');
+
+        // Check install status on load
+        window.addEventListener('load', () => {
+             // 1. Session Resume Logic
+             localStorage.removeItem('kivro_preview_session');
+             const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
+             if (session) {
+                 if (!session.isUnlimited && session.expiresAt < Date.now()) {
+                     localStorage.removeItem('kivro_premium_session');
+                 } else {
+                     showVipWelcome(session);
+                 }
+             }
+
+             // 2. Install Logic
+             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+             
+             if (!isStandalone && !localStorage.getItem('kivro_install_dismissed')) {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                
+                setTimeout(() => {
+                    installModal.classList.remove('translate-y-full');
+                    
+                    if (isIOS) {
+                        iosText.classList.remove('hidden');
+                    } else if (deferredPrompt) {
+                        installBtn.classList.remove('hidden');
+                    } else {
+                        manualText.classList.remove('hidden');
+                    }
+                }, 2000); 
+             }
+        });
+
+        // Listen for install prompt (Android/Desktop)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!installModal.classList.contains('translate-y-full')) {
+                manualText.classList.add('hidden');
+                installBtn.classList.remove('hidden');
+            }
+        });
+
+        function dismissInstall() {
+            installModal.classList.add('translate-y-full');
+            localStorage.setItem('kivro_install_dismissed', 'true');
+        }
+
+        function triggerInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        dismissInstall();
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
 
         // UPDATED BOOKMARKLET: Uses raw.githack.com to prevent MIME type blocking
         const BOOKMARKLET_CODE = "javascript:(function(){if(document.getElementById('kivro-menu-v2'))return;const MENU_ITEMS=[{name:\"🦄 Blooket Cheats (GUI)\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/Bookletkiv/main/gui.js';document.body.appendChild(s);alert('Blooket GUI Injecting...');}},{name:\"👆 iPad Autoclicker (Target)\",action:function(){if(window.kivroAC){clearInterval(window.kivroAC);window.kivroAC=null;var t=document.getElementById('kivro-ac-target');if(t)t.remove();alert('Autoclicker: OFF');}else{var t=document.createElement('div');t.id='kivro-ac-target';t.style.cssText='position:fixed;top:50%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:4px solid rgba(255,0,60,0.6);border-radius:50%;z-index:9999999999;box-shadow:0 0 15px rgba(255,0,60,0.4);pointer-events:none;transition:transform 0.1s;';var h=document.createElement('div');h.style.cssText='position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:rgba(255,0,60,0.9);border-radius:50%;cursor:move;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;font-weight:bold;';h.innerText='✢';t.appendChild(h);var c=document.createElement('div');c.style.cssText='position:absolute;top:50%;left:50%;width:4px;height:4px;background:red;transform:translate(-50%,-50%);border-radius:50%;';t.appendChild(c);document.body.appendChild(t);let d=false;const mv=(e)=>{if(!d)return;e.preventDefault();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;t.style.left=cx+'px';t.style.top=cy+'px';};const dn=(e)=>{d=true;e.preventDefault();t.style.transform='scale(1.1)';};const up=()=>{d=false;t.style.transform='scale(1)';};h.addEventListener('mousedown',dn);h.addEventListener('touchstart',dn);document.addEventListener('mousemove',mv);document.addEventListener('touchmove',mv);document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp);alert('Autoclicker: ON. Drag the red knob to move.');window.kivroAC=setInterval(function(){var r=t.getBoundingClientRect();var el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);if(el&&el!==t&&el!==h&&el!==c){el.click();el.dispatchEvent(new MouseEvent('mousedown'));el.dispatchEvent(new MouseEvent('mouseup'));}},50);}}},{name:\"🌊 History Flooder\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/HistoryFlooder.js';document.body.appendChild(s);alert('History Flooder Loading...');}},{name:\"📺 Fullscreen Anywhere\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/InstantFullscreen.js';document.body.appendChild(s);alert('Enabling Fullscreen...');}}];const css=`#kivro-menu-v2{position:fixed;top:100px;left:100px;width:260px;display:flex;flex-direction:column;background:rgba(20,20,30,0.65);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,0.15);border-top:1px solid rgba(255,255,255,0.3);border-left:1px solid rgba(255,255,255,0.3);border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,0.5),inset 0 0 20px rgba(255,255,255,0.05);font-family:system-ui,-apple-system,sans-serif;color:white;z-index:2147483647;transition:width 0.3s,height 0.3s,border-radius 0.3s,background 0.3s;overflow:hidden;user-select:none}#kivro-menu-v2.minimized{width:60px;height:60px;border-radius:50%;background:url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png');background-size:cover;background-position:center;box-shadow:0 0 20px rgba(139,92,246,0.6);border:2px solid rgba(255,255,255,0.5);cursor:pointer}#kivro-menu-v2.minimized>*{display:none !important}.kv-header{padding:16px;background:linear-gradient(to right,rgba(255,255,255,0.05),transparent);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}#kivro-menu-v2.minimized .kv-header{display:none}.kv-title{font-weight:800;font-size:12px;letter-spacing:1.5px;color:#a78bfa;text-transform:uppercase}.kv-controls{display:flex;gap:8px}.kv-btn-ctrl{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;font-family:monospace}.kv-body{padding:12px;max-height:400px;overflow-y:auto}.kv-btn{width:100%;padding:14px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:14px;color:#e4e4e7;font-size:13px;font-weight:600;text-align:left;cursor:pointer;transition:all 0.2s ease}.kv-btn:active{transform:scale(0.98);background:rgba(139,92,246,0.2)}`;const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);const ui=document.createElement('div');ui.id='kivro-menu-v2';ui.innerHTML='<div class=\"kv-header\"><span class=\"kv-title\">KIVRO PREMIUM</span><div class=\"kv-controls\"><div id=\"kv-min\" class=\"kv-btn-ctrl\">_</div><div id=\"kv-close\" class=\"kv-btn-ctrl\">X</div></div></div><div class=\"kv-body\"></div>';document.body.appendChild(ui);const body=ui.querySelector('.kv-body');MENU_ITEMS.forEach(item=>{const btn=document.createElement('button');btn.className='kv-btn';btn.innerText=item.name;const run=(e)=>{e.stopPropagation();try{item.action()}catch(e){alert(e)}};btn.onclick=run;btn.ontouchend=run;body.appendChild(btn)});let isMin=false;let isDragging=false;let hasMoved=false;let startX,startY,initX,initY;const minBtn=ui.querySelector('#kv-min');const closeBtn=ui.querySelector('#kv-close');const header=ui.querySelector('.kv-header');const doMin=(e)=>{e.stopPropagation();e.preventDefault();isMin=true;ui.classList.add('minimized')};const doClose=(e)=>{e.stopPropagation();e.preventDefault();ui.remove();style.remove()};minBtn.ontouchend=doMin;minBtn.onclick=doMin;closeBtn.ontouchend=doClose;closeBtn.onclick=doClose;const stopProp=(e)=>{e.stopPropagation()};minBtn.ontouchstart=stopProp;minBtn.onmousedown=stopProp;closeBtn.ontouchstart=stopProp;closeBtn.onmousedown=stopProp;const onDown=(e)=>{if(e.target.closest('.kv-controls'))return;isDragging=true;hasMoved=false;const t=e.touches?e.touches[0]:e;startX=t.clientX;startY=t.clientY;initX=ui.offsetLeft;initY=ui.offsetTop;ui.style.transition='none'};const onMove=(e)=>{if(!isDragging)return;const t=e.touches?e.touches[0]:e;const dx=t.clientX-startX;const dy=t.clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5)hasMoved=true;ui.style.left=(initX+dx)+'px';ui.style.top=(initY+dy)+'px';if(e.cancelable)e.preventDefault()};const onUp=(e)=>{if(!isDragging)return;isDragging=false;ui.style.transition='width 0.3s, height 0.3s, border-radius 0.3s, background 0.3s';if(isMin&&!hasMoved){isMin=false;ui.classList.remove('minimized')}};ui.addEventListener('mousedown',onDown);ui.addEventListener('touchstart',onDown,{passive:false});document.addEventListener('mousemove',onMove);document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp)})();void(0);";
@@ -889,7 +1094,7 @@
             { id: 49, title: "Spiral Roll", category: "Fun", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
             { id: 50, title: "Wordle", category: "Word", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
             { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
-            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
             { id: 53, title: "Game In Game", category: "Meta", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//game-inside/index.html" },
             { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
             { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//raft-war/index.html" },
