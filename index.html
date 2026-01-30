@@ -882,7 +882,7 @@
             
             // Check for Admin status to customize message
             if (session.isAdmin) {
-                document.querySelector('#vip-welcome-content h1').innerText = "SYSTEM OVERRIDE";
+                document.querySelector('#vip-welcome-content h1').innerText = "ADMIN";
                 document.getElementById('welcome-subtitle').innerText = "Welcome, Administrator";
                 document.getElementById('welcome-subtitle').classList.replace('text-amber-400', 'text-red-500');
             } else {
