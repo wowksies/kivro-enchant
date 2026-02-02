@@ -101,25 +101,39 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-        /* IMPORTANT: Fixes iPad Scrolling issues */
-        html, body {
+        /* IMPORTANT: SCROLLING FIX */
+        html {
+            height: 100%;
+            overflow: hidden; /* Prevent html scrolling */
+        }
+
+        body {
             background-color: #050505;
             color: #e4e4e7;
             -webkit-tap-highlight-color: transparent;
-            overscroll-behavior-y: none; /* Prevent bounce on body */
-            position: fixed; /* Lock body */
-            width: 100%;
+            overscroll-behavior-y: none;
             height: 100%;
-            overflow: hidden; /* Only allow internal div to scroll */
+            overflow: hidden; /* Prevent body scrolling */
+            position: relative; /* Fixed: Removed 'position: fixed' which caused the lock */
+            width: 100%;
         }
 
-        /* Allow internal scrolling */
+        /* The Internal Scrolling Container */
         #app-content, #site-lock {
             position: absolute;
-            inset: 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
-            padding-bottom: env(safe-area-inset-bottom); /* Respect iPhone home bar */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; /* Enable vertical scrolling */
+            -webkit-overflow-scrolling: touch; /* Native iOS momentum scrolling */
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 1;
+        }
+
+        /* Ensure content has enough room at bottom to scroll */
+        main {
+            padding-bottom: 150px !important;
         }
 
         .liquid-bg {
@@ -288,7 +302,7 @@
         </div>
     </div>
 
-    <!-- GAME PLAYER OVERLAY (SECURE & SCROLL LOCKED) -->
+    <!-- GAME PLAYER OVERLAY (SECURE) -->
     <div id="game-player-overlay" class="fixed inset-0 z-[15000] bg-black flex flex-col transition-opacity duration-300 opacity-0 pointer-events-none">
         <!-- Toolbar -->
         <div class="h-14 bg-zinc-900/90 backdrop-blur border-b border-white/10 flex items-center justify-between px-6">
