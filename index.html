@@ -6,7 +6,7 @@
     <title>Kivro • Elite</title>
     <meta name="description" content="Exclusive unblocked library.">
 
-    <!-- PWA Manifest (Defaults to Kivro Logo) -->
+    <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIktpdnJvIEVsaXRlIiwKICAic2hvcnRfbmFtZSI6ICJLaXZybyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0tBWUFaenovQ05NLUdhbWVzL21haW4vTG9nb2FjdHVhbC5wbmciLAogICAgInNpemVzIjogIjUxMng1MTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
 
     <!-- PWA Meta -->
@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-title" content="Kivro Elite">
     <meta name="theme-color" content="#000000">
 
-    <!-- Icons - Defaults to Kivro Logo -->
+    <!-- Icons -->
     <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
     <link id="dynamic-favicon" rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
@@ -101,12 +101,25 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-        body {
+        /* IMPORTANT: Fixes iPad Scrolling issues */
+        html, body {
             background-color: #050505;
             color: #e4e4e7;
             -webkit-tap-highlight-color: transparent;
-            overscroll-behavior-y: none;
-            overflow-x: hidden;
+            overscroll-behavior-y: none; /* Prevent bounce on body */
+            position: fixed; /* Lock body */
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Only allow internal div to scroll */
+        }
+
+        /* Allow internal scrolling */
+        #app-content, #site-lock {
+            position: absolute;
+            inset: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+            padding-bottom: env(safe-area-inset-bottom); /* Respect iPhone home bar */
         }
 
         .liquid-bg {
@@ -124,9 +137,9 @@
         }
         
         /* GOLD / AMBER THEME BACKGROUND */
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #b45309; } /* Amber 700 */
-        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #92400e; animation-delay: -5s; } /* Amber 800 */
-        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #d97706; animation-delay: -10s; opacity: 0.25; } /* Amber 600 */
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #b45309; }
+        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #92400e; animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #d97706; animation-delay: -10s; opacity: 0.25; }
 
         .smooth-card {
             background: rgba(20, 20, 20, 0.6);
@@ -138,13 +151,13 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            opacity: 0; /* Hidden initially for staggered animation */
+            opacity: 0; 
         }
 
         .smooth-card:hover {
             transform: translateY(-8px) scale(1.02);
             background: rgba(40, 40, 40, 0.8);
-            border-color: rgba(251, 191, 36, 0.3); /* Gold tint on hover */
+            border-color: rgba(251, 191, 36, 0.3);
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.1);
         }
 
@@ -223,7 +236,7 @@
 
         /* Notification Toast */
         #toast {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px);
             background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,0.1);
             padding: 14px 28px; border-radius: 16px; color: white; font-weight: bold; font-size: 14px;
@@ -254,7 +267,7 @@
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #fbbf24; } }
     </style>
 </head>
-<body class="antialiased selection:bg-gold/30 selection:text-white overflow-hidden" id="main-body">
+<body class="antialiased selection:bg-gold/30 selection:text-white" id="main-body">
 
     <div class="liquid-bg">
         <div class="blob-1"></div>
@@ -275,7 +288,7 @@
         </div>
     </div>
 
-    <!-- GAME PLAYER OVERLAY (THE FIX) -->
+    <!-- GAME PLAYER OVERLAY (SECURE & SCROLL LOCKED) -->
     <div id="game-player-overlay" class="fixed inset-0 z-[15000] bg-black flex flex-col transition-opacity duration-300 opacity-0 pointer-events-none">
         <!-- Toolbar -->
         <div class="h-14 bg-zinc-900/90 backdrop-blur border-b border-white/10 flex items-center justify-between px-6">
@@ -292,14 +305,14 @@
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
             </button>
         </div>
-        <!-- Iframe Container -->
+        <!-- Iframe Container - MAXIMUM PERMISSIONS FOR SAVING -->
         <div class="flex-1 relative bg-black w-full h-full overflow-hidden">
-            <iframe id="game-frame" class="w-full h-full border-0" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"></iframe>
+            <iframe id="game-frame" class="w-full h-full border-0" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock allow-modals allow-top-navigation"></iframe>
         </div>
     </div>
 
-    <!-- SITE LOCK (With Sneaky CRT Intro Animation) -->
-    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center overflow-y-auto overflow-x-hidden transition-all duration-700 opacity-0 animate-crt-on">
+    <!-- SITE LOCK -->
+    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center transition-all duration-700 opacity-0 animate-crt-on">
         <!-- Background Effects -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
@@ -310,7 +323,7 @@
 
         <div class="relative z-10 w-full max-w-4xl p-4 md:p-8 flex flex-col md:flex-row gap-8 items-stretch animate-fade-up">
             
-            <!-- LEFT COLUMN: Better Introduction / System Stats -->
+            <!-- LEFT COLUMN -->
             <div class="flex-1 bg-zinc-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden group hover:border-amber-500/30 transition-colors">
                 <!-- Glitchy System Status -->
                 <div class="absolute top-0 right-0 bg-white/5 text-zinc-500 text-[9px] font-mono font-bold px-3 py-1 rounded-bl-xl z-20 border-l border-b border-white/5">
@@ -378,7 +391,6 @@
                 <!-- Pricing Stack -->
                 <div class="bg-zinc-900/90 backdrop-blur-xl border border-white/10 rounded-3xl p-2">
                     <div class="space-y-1">
-                        <!-- 1 Day -->
                         <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-default">
                             <div>
                                 <div class="text-xs font-bold text-zinc-400">1 Day Pass</div>
@@ -388,7 +400,6 @@
                                 <div class="text-sm font-bold text-zinc-300">3€</div>
                             </div>
                         </div>
-                         <!-- 7 Days -->
                         <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-default border border-transparent hover:border-white/5">
                             <div>
                                 <div class="text-xs font-bold text-zinc-300">7 Day Pass</div>
@@ -399,14 +410,9 @@
                             </div>
                         </div>
 
-                         <!-- THE HERO: 2 WEEKS -->
                         <div class="relative overflow-hidden rounded-xl border border-amber-500/40 p-3 group cursor-pointer transition-all hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] mt-1">
-                            <!-- Shimmer Effect -->
                             <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-yellow-500/20 to-amber-500/10 animate-shimmer bg-[length:200%_100%]"></div>
-                            
-                            <!-- Badge -->
                             <div class="absolute top-0 right-0 bg-amber-500 text-black text-[8px] font-extrabold px-2 py-0.5 rounded-bl-lg shadow-lg z-10 tracking-wide">VIP CHOICE</div>
-                            
                             <div class="flex items-center justify-between relative z-10">
                                 <div class="flex items-center gap-3">
                                      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg text-white">
@@ -421,17 +427,11 @@
                                     <div class="text-lg font-extrabold text-white text-shadow-sm">12€</div>
                                 </div>
                             </div>
-                            <!-- Features specifically for this plan -->
                             <div class="relative z-10 mt-2 pt-2 border-t border-amber-500/20 grid grid-cols-2 gap-1">
                                 <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1"><span class="w-1 h-1 bg-green-400 rounded-full"></span> 100% Uptime</span>
                                 <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1 justify-end"><span class="w-1 h-1 bg-blue-400 rounded-full"></span> Priority Support</span>
                             </div>
                         </div>
-
-                        <!-- REFUND POLICY DISCLAIMER -->
-                         <div class="mt-3 text-center">
-                            <p class="text-[9px] text-red-400/80 font-bold uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity">⚠️ Non-Refundable Digital Keys</p>
-                         </div>
                     </div>
                 </div>
 
@@ -469,10 +469,10 @@
     </div>
 
     <!-- MAIN APP CONTENT -->
-    <div id="app-content" class="opacity-0 scale-95 transition-all duration-700 blur-sm h-screen overflow-y-auto">
+    <div id="app-content" class="opacity-0 scale-95 transition-all duration-700 blur-sm">
         <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5">
             <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative">
-                <div class="flex items-center gap-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="flex items-center gap-4 cursor-pointer" onclick="document.getElementById('app-content').scrollTo({top:0, behavior:'smooth'})">
                     <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg animate-float">
                 </div>
 
@@ -485,13 +485,12 @@
                     <button class="nav-btn" data-tab="Favs">Saved</button>
                 </div>
 
-                <!-- RIGHT CONTROLS (Updated HUD Timer) -->
+                <!-- RIGHT CONTROLS -->
                 <div class="flex items-center gap-4">
                     <div id="vip-status-badge" class="flex items-center gap-2 mr-2">
                         <span class="text-[10px] md:text-[8px] font-black vip-badge tracking-widest uppercase truncate max-w-[80px] md:max-w-none">VIP MEMBER</span>
                     </div>
 
-                    <!-- HUD TIMER -->
                     <div class="hidden md:flex flex-col items-end">
                         <div class="text-[8px] text-zinc-600 uppercase tracking-widest font-bold mb-0.5">Session Time</div>
                         <div class="flex items-center gap-2 px-3 py-1.5 rounded bg-black/40 border border-white/5 shadow-inner">
@@ -532,7 +531,7 @@
             </div>
         </nav>
 
-        <main class="pt-36 pb-12 px-4 max-w-7xl mx-auto min-h-screen">
+        <main class="pt-36 pb-32 px-4 max-w-7xl mx-auto min-h-screen">
             <!-- DASHBOARD HEADER -->
             <div id="dashboard-header" class="text-center mb-16 fade-up">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-zinc-400 text-[10px] font-bold mb-6">
@@ -546,11 +545,9 @@
                 <div id="free-mode-cta" class="hidden mt-10 max-w-md mx-auto animate-fade-up">
                     <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600/20 to-black border border-amber-500/30 p-8 backdrop-blur-md shadow-2xl">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/30 blur-3xl rounded-full"></div>
-                        
                         <div class="relative z-10 text-left">
                             <h3 class="text-2xl font-extrabold text-white mb-2 text-center">Get Premium Access</h3>
                             <p class="text-sm text-zinc-400 mb-6 text-center">Unlock Proxy • Menu • All Games</p>
-                            
                             <div class="space-y-3">
                                 <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
                                     <div class="w-10 h-10 flex-shrink-0 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
@@ -561,7 +558,6 @@
                                         <p class="text-white font-bold">Cash Only (In Person)</p>
                                     </div>
                                 </div>
-
                                 <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
                                      <div class="w-10 h-10 flex-shrink-0 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -572,7 +568,6 @@
                                      </div>
                                 </div>
                             </div>
-                            
                             <p class="mt-6 text-xs text-center text-zinc-500">Find me IRL or email to purchase a key.</p>
                         </div>
                     </div>
@@ -597,7 +592,6 @@
                     <div class="relative z-10 text-center">
                         <h3 class="text-lg font-bold text-white mb-2">Installation Script</h3>
                         <p class="text-xs text-zinc-500 mb-6 uppercase tracking-widest">Universal Bookmarklet</p>
-                        
                         <button onclick="copyBookmarklet()" class="w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-amber-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                             Tap to Copy Code
@@ -608,7 +602,6 @@
 
                 <div class="space-y-4">
                     <h3 class="text-sm font-bold text-zinc-500 uppercase tracking-widest pl-2">iPad / iPhone Setup</h3>
-                    
                     <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
                         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">1</span>
                         <p class="text-sm text-zinc-400">Tap <b class="text-white">Copy Code</b> above.</p>
@@ -627,7 +620,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </div>
 
@@ -639,35 +631,27 @@
     <!-- CLOAK / INSTALL POPUP -->
     <div id="cloak-modal" class="fixed inset-0 z-[12000] bg-black/80 backdrop-blur-md flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-[#141414]/90 border border-white/10 rounded-2xl p-6 shadow-2xl max-w-lg w-[92%] relative overflow-hidden transform scale-95 transition-transform duration-300">
-            <!-- Close Button -->
             <button onclick="closeCloakModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-
             <div class="text-center mb-6">
                 <h2 class="text-2xl font-bold text-white mb-2">App Disguise</h2>
                 <p class="text-zinc-400 text-sm">Choose an icon to cloak the app on your home screen.</p>
             </div>
-
-            <!-- Icon Selector -->
             <div class="grid grid-cols-3 gap-4 mb-8">
-                 <!-- Teams -->
                  <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png', 'Teams')">
                     <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-indigo-500 hover:scale-105 transition-all select-icon">
                     <span class="text-xs font-bold text-zinc-500 group-hover:text-white">Teams</span>
                  </div>
-                 <!-- Kahoot -->
                  <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png', 'Kahoot!')">
                     <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-purple-500 hover:scale-105 transition-all select-icon">
                     <span class="text-xs font-bold text-zinc-500 group-hover:text-white">Kahoot!</span>
                  </div>
-                 <!-- OneNote (Default) -->
                  <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png', 'OneNote')">
                     <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-pink-500 hover:scale-105 transition-all select-icon">
                     <span class="text-xs font-bold text-zinc-500 group-hover:text-white">OneNote</span>
                  </div>
             </div>
-
             <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center">
                 <p class="text-xs text-zinc-400 mb-2 font-bold uppercase tracking-wide">Installation Steps</p>
                 <div class="flex items-center justify-center gap-2 text-sm text-zinc-300">
@@ -677,10 +661,9 @@
         </div>
     </div>
 
-    <!-- AUTO INSTALL PROMPT (Visible on both pages via Z-Index) -->
+    <!-- AUTO INSTALL PROMPT -->
     <div id="install-modal" class="fixed bottom-0 left-0 right-0 z-[12000] p-4 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
         <div class="bg-[#141414]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl max-w-md mx-auto relative overflow-hidden">
-            <!-- Close Button -->
             <button onclick="dismissInstall()" class="absolute top-3 right-3 text-zinc-500 hover:text-white">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -691,13 +674,10 @@
                      <p id="install-text" class="text-zinc-400 text-xs leading-relaxed">
                         Install Kivro Elite for fullscreen & better performance.
                      </p>
-                     <!-- iOS Instructions -->
                      <div id="ios-instructions" class="hidden mt-3 text-xs text-amber-400 font-bold flex items-center gap-2">
                          <span>Tap <svg class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg> then "Add to Home Screen" <svg class="w-4 h-4 inline bg-white/20 rounded ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
                      </div>
-                     <!-- Android/Desktop Button -->
                      <button id="install-btn" class="hidden mt-3 w-full py-2 bg-white text-black font-bold rounded-lg text-xs hover:bg-zinc-200 transition-colors" onclick="triggerInstall()">Add to Home Screen</button>
-                     <!-- Manual Instructions Fallback -->
                      <div id="manual-install" class="hidden mt-3 text-xs text-zinc-500 font-medium">
                         Open browser menu and select "Add to Home Screen" or "Install App".
                      </div>
@@ -715,11 +695,10 @@
         let currentTab = 'Games';
         let countdownInterval = null;
         let isPreviewMode = false;
-        let sessionCheckInterval = null; // POLLING CHECK
+        let sessionCheckInterval = null;
 
         // --- GAME PLAYER OVERLAY LOGIC ---
         function playGame(url, title) {
-            // Check for Preview Mode restriction
             if (isPreviewMode) {
                 showToast("🔒 Premium Required to Play");
                 document.getElementById('free-mode-cta').scrollIntoView({behavior: 'smooth', block: 'center'});
@@ -730,16 +709,13 @@
             const frame = document.getElementById('game-frame');
             const titleEl = document.getElementById('active-game-title');
             
-            // Set source and title
             frame.src = url;
             titleEl.innerText = title || "Running Protocol";
             
-            // Show overlay
             overlay.classList.remove('hidden', 'pointer-events-none');
-            // Small delay for fade in
             setTimeout(() => overlay.classList.remove('opacity-0'), 50);
             
-            // Lock body scroll
+            // Re-lock the body just in case
             document.body.style.overflow = 'hidden';
         }
 
@@ -747,17 +723,12 @@
             const overlay = document.getElementById('game-player-overlay');
             const frame = document.getElementById('game-frame');
             
-            // Hide overlay
             overlay.classList.add('opacity-0');
             
             setTimeout(() => {
                 overlay.classList.add('hidden', 'pointer-events-none');
-                // Clear source to stop game/audio
                 frame.src = 'about:blank';
-                // Unlock body scroll
-                if (!document.getElementById('site-lock').style.display || document.getElementById('site-lock').style.display === 'none') {
-                     document.body.style.overflow = '';
-                }
+                // Note: Body remains hidden/fixed, scroll stays in #app-content
             }, 300);
         }
 
@@ -765,13 +736,12 @@
             const frame = document.getElementById('game-frame');
             if (frame.requestFullscreen) {
                 frame.requestFullscreen();
-            } else if (frame.webkitRequestFullscreen) { /* Safari */
+            } else if (frame.webkitRequestFullscreen) {
                 frame.webkitRequestFullscreen();
-            } else if (frame.msRequestFullscreen) { /* IE11 */
+            } else if (frame.msRequestFullscreen) {
                 frame.msRequestFullscreen();
             }
         }
-
 
         // --- CLOAKING LOGIC ---
         function openCloakModal() {
@@ -793,18 +763,11 @@
         }
 
         function setCloak(iconUrl, appName) {
-            // 1. Update Apple Touch Icon
             const appleIcon = document.getElementById('apple-touch-icon');
             if(appleIcon) appleIcon.href = iconUrl;
-
-            // 2. Update Favicon (for desktop tabs)
             const favIcon = document.getElementById('dynamic-favicon');
             if(favIcon) favIcon.href = iconUrl;
-
-            // 3. Update Document Title
             document.title = appName;
-
-            // 4. Update Apple Web App Title (Meta)
             let appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
             if (!appleTitleMeta) {
                 appleTitleMeta = document.createElement('meta');
@@ -812,11 +775,7 @@
                 document.head.appendChild(appleTitleMeta);
             }
             appleTitleMeta.setAttribute('content', appName);
-
-            // 5. Update Preview in Install Modal (if visible)
             document.getElementById('install-icon-preview').src = iconUrl;
-
-            // 6. UI Feedback
             showToast(`Disguised as ${appName}`);
             closeCloakModal();
         }
@@ -828,7 +787,6 @@
         const installBtn = document.getElementById('install-btn');
         const manualText = document.getElementById('manual-install');
 
-        // Check install status on load
         window.addEventListener('load', () => {
              // 1. Session Resume Logic
              localStorage.removeItem('kivro_preview_session');
@@ -846,11 +804,9 @@
              
              if (!isStandalone && !localStorage.getItem('kivro_install_dismissed')) {
                 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                
                 setTimeout(() => {
                     const installModal = document.getElementById('install-modal');
                     installModal.classList.remove('translate-y-full');
-                    
                     if (isIOS) {
                         document.getElementById('ios-instructions').classList.remove('hidden');
                     } else if (deferredPrompt) {
@@ -862,7 +818,6 @@
              }
         });
 
-        // Listen for install prompt (Android/Desktop)
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -889,7 +844,7 @@
             }
         }
 
-        // UPDATED BOOKMARKLET: Uses raw.githack.com to prevent MIME type blocking
+        // BOOKMARKLET
         const BOOKMARKLET_CODE = "javascript:(function(){if(document.getElementById('kivro-menu-v2'))return;const MENU_ITEMS=[{name:\"🦄 Blooket Cheats (GUI)\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/Bookletkiv/main/gui.js';document.body.appendChild(s);alert('Blooket GUI Injecting...');}},{name:\"👆 iPad Autoclicker (Target)\",action:function(){if(window.kivroAC){clearInterval(window.kivroAC);window.kivroAC=null;var t=document.getElementById('kivro-ac-target');if(t)t.remove();alert('Autoclicker: OFF');}else{var t=document.createElement('div');t.id='kivro-ac-target';t.style.cssText='position:fixed;top:50%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:4px solid rgba(255,0,60,0.6);border-radius:50%;z-index:9999999999;box-shadow:0 0 15px rgba(255,0,60,0.4);pointer-events:none;transition:transform 0.1s;';var h=document.createElement('div');h.style.cssText='position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:rgba(255,0,60,0.9);border-radius:50%;cursor:move;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;font-weight:bold;';h.innerText='✢';t.appendChild(h);var c=document.createElement('div');c.style.cssText='position:absolute;top:50%;left:50%;width:4px;height:4px;background:red;transform:translate(-50%,-50%);border-radius:50%;';t.appendChild(c);document.body.appendChild(t);let d=false;const mv=(e)=>{if(!d)return;e.preventDefault();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;t.style.left=cx+'px';t.style.top=cy+'px';};const dn=(e)=>{d=true;e.preventDefault();t.style.transform='scale(1.1)';};const up=()=>{d=false;t.style.transform='scale(1)';};h.addEventListener('mousedown',dn);h.addEventListener('touchstart',dn);document.addEventListener('mousemove',mv);document.addEventListener('touchmove',mv);document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp);alert('Autoclicker: ON. Drag the red knob to move.');window.kivroAC=setInterval(function(){var r=t.getBoundingClientRect();var el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);if(el&&el!==t&&el!==h&&el!==c){el.click();el.dispatchEvent(new MouseEvent('mousedown'));el.dispatchEvent(new MouseEvent('mouseup'));}},50);}}},{name:\"🌊 History Flooder\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/HistoryFlooder.js';document.body.appendChild(s);alert('History Flooder Loading...');}},{name:\"📺 Fullscreen Anywhere\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/InstantFullscreen.js';document.body.appendChild(s);alert('Enabling Fullscreen...');}}];const css=`#kivro-menu-v2{position:fixed;top:100px;left:100px;width:260px;display:flex;flex-direction:column;background:rgba(20,20,30,0.65);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,0.15);border-top:1px solid rgba(255,255,255,0.3);border-left:1px solid rgba(255,255,255,0.3);border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,0.5),inset 0 0 20px rgba(255,255,255,0.05);font-family:system-ui,-apple-system,sans-serif;color:white;z-index:2147483647;transition:width 0.3s,height 0.3s,border-radius 0.3s,background 0.3s;overflow:hidden;user-select:none}#kivro-menu-v2.minimized{width:60px;height:60px;border-radius:50%;background:url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png');background-size:cover;background-position:center;box-shadow:0 0 20px rgba(139,92,246,0.6);border:2px solid rgba(255,255,255,0.5);cursor:pointer}#kivro-menu-v2.minimized>*{display:none !important}.kv-header{padding:16px;background:linear-gradient(to right,rgba(255,255,255,0.05),transparent);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}#kivro-menu-v2.minimized .kv-header{display:none}.kv-title{font-weight:800;font-size:12px;letter-spacing:1.5px;color:#a78bfa;text-transform:uppercase}.kv-controls{display:flex;gap:8px}.kv-btn-ctrl{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;font-family:monospace}.kv-body{padding:12px;max-height:400px;overflow-y:auto}.kv-btn{width:100%;padding:14px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:14px;color:#e4e4e7;font-size:13px;font-weight:600;text-align:left;cursor:pointer;transition:all 0.2s ease}.kv-btn:active{transform:scale(0.98);background:rgba(139,92,246,0.2)}`;const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);const ui=document.createElement('div');ui.id='kivro-menu-v2';ui.innerHTML='<div class=\"kv-header\"><span class=\"kv-title\">KIVRO PREMIUM</span><div class=\"kv-controls\"><div id=\"kv-min\" class=\"kv-btn-ctrl\">_</div><div id=\"kv-close\" class=\"kv-btn-ctrl\">X</div></div></div><div class=\"kv-body\"></div>';document.body.appendChild(ui);const body=ui.querySelector('.kv-body');MENU_ITEMS.forEach(item=>{const btn=document.createElement('button');btn.className='kv-btn';btn.innerText=item.name;const run=(e)=>{e.stopPropagation();try{item.action()}catch(e){alert(e)}};btn.onclick=run;btn.ontouchend=run;body.appendChild(btn)});let isMin=false;let isDragging=false;let hasMoved=false;let startX,startY,initX,initY;const minBtn=ui.querySelector('#kv-min');const closeBtn=ui.querySelector('#kv-close');const header=ui.querySelector('.kv-header');const doMin=(e)=>{e.stopPropagation();e.preventDefault();isMin=true;ui.classList.add('minimized')};const doClose=(e)=>{e.stopPropagation();e.preventDefault();ui.remove();style.remove()};minBtn.ontouchend=doMin;minBtn.onclick=doMin;closeBtn.ontouchend=doClose;closeBtn.onclick=doClose;const stopProp=(e)=>{e.stopPropagation()};minBtn.ontouchstart=stopProp;minBtn.onmousedown=stopProp;closeBtn.ontouchstart=stopProp;closeBtn.onmousedown=stopProp;const onDown=(e)=>{if(e.target.closest('.kv-controls'))return;isDragging=true;hasMoved=false;const t=e.touches?e.touches[0]:e;startX=t.clientX;startY=t.clientY;initX=ui.offsetLeft;initY=ui.offsetTop;ui.style.transition='none'};const onMove=(e)=>{if(!isDragging)return;const t=e.touches?e.touches[0]:e;const dx=t.clientX-startX;const dy=t.clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5)hasMoved=true;ui.style.left=(initX+dx)+'px';ui.style.top=(initY+dy)+'px';if(e.cancelable)e.preventDefault()};const onUp=(e)=>{if(!isDragging)return;isDragging=false;ui.style.transition='width 0.3s, height 0.3s, border-radius 0.3s, background 0.3s';if(isMin&&!hasMoved){isMin=false;ui.classList.remove('minimized')}};ui.addEventListener('mousedown',onDown);ui.addEventListener('touchstart',onDown,{passive:false});document.addEventListener('mousemove',onMove);document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp)})();void(0);";
 
         function getDeviceId() {
@@ -913,7 +868,6 @@
                 return;
             }
 
-            // Simple loading state
             const originalText = btn.innerHTML;
             btn.innerHTML = "<span>DECRYPTING...</span>";
             btn.disabled = true;
@@ -926,15 +880,13 @@
                     const session = {
                         key: key,
                         expiresAt: data.expiresAt,
-                        isUnlimited: data.isUnlimited === true, // STRICT BOOLEAN CHECK
+                        isUnlimited: data.isUnlimited === true,
                         timestamp: Date.now(),
                         type: 'premium',
                         isAdmin: data.isAdmin
                     };
                     localStorage.setItem('kivro_premium_session', JSON.stringify(session));
-                    
                     showVipWelcome(session);
-
                 } else {
                     showError(data.message || "Invalid Access");
                     btn.innerHTML = originalText;
@@ -954,50 +906,36 @@
             }
         }
         
-        // --- NEW: VIP WELCOME ANIMATION ---
         function showVipWelcome(session) {
             const welcome = document.getElementById('vip-welcome');
             const content = document.getElementById('vip-welcome-content');
             
-            // Check for Admin status to customize message
             if (session.isAdmin) {
                 document.querySelector('#vip-welcome-content h1').innerText = "SYSTEM OVERRIDE";
                 document.getElementById('welcome-subtitle').innerText = "Welcome, Administrator";
                 document.getElementById('welcome-subtitle').classList.replace('text-amber-400', 'text-red-500');
             } else {
-                 // Reset to default in case previous session was admin
                 document.querySelector('#vip-welcome-content h1').innerText = "ACCESS GRANTED";
                 document.getElementById('welcome-subtitle').innerText = "Welcome to Elite Membership";
                 document.getElementById('welcome-subtitle').classList.replace('text-red-500', 'text-amber-400');
             }
 
-            // 1. Fade in the black overlay
             welcome.classList.remove('pointer-events-none', 'opacity-0');
             
-            // 2. Animate content entrance
             setTimeout(() => {
                 content.classList.remove('scale-95');
                 content.classList.add('animate-entrance');
             }, 100);
 
-            // 3. After 2.5 seconds, enter system and fade out overlay
             setTimeout(() => {
                 enterSystem(session);
-                
-                // Fade out welcome screen
                 welcome.classList.add('opacity-0', 'pointer-events-none');
-                
-                // Show a nice toast once inside
                 setTimeout(() => showToast(session.isAdmin ? "Root Access Granted" : "Welcome back, Elite Member"), 800);
             }, 2500);
         }
 
-        // --- PREVIEW MODE LOGIC ---
         function startVisualPreview() {
-            const session = {
-                type: 'preview',
-                expiresAt: Date.now() + 3600000 
-            };
+            const session = { type: 'preview', expiresAt: Date.now() + 3600000 };
             enterSystem(session);
         }
 
@@ -1005,39 +943,30 @@
             document.getElementById('site-lock').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('site-lock').style.display = 'none';
+                
+                // IMPORTANT: Keep body locked, but allow inner scrolling
                 document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
-                document.getElementById('main-body').classList.remove('overflow-hidden');
+                // Removed: document.getElementById('main-body').classList.remove('overflow-hidden'); <-- CAUSED THE BUG
                 
                 isPreviewMode = (session.type === 'preview');
                 
-                // Update UI based on mode
                 if (isPreviewMode) {
                     document.getElementById('page-title').innerText = "Library Preview";
                     document.getElementById('system-status-text').innerText = "Status: Read-Only Mode";
                     document.getElementById('system-status-dot').classList.remove('bg-green-500');
                     document.getElementById('system-status-dot').classList.add('bg-yellow-500');
-                    
-                    // Show Buy Card
                     document.getElementById('free-mode-cta').classList.remove('hidden');
-                    
-                    // Hide Premium Badges
                     document.getElementById('vip-status-badge').classList.add('hidden');
                 } else {
-                    // Full access
                     startSessionCheck(session.key);
-                    
-                    // Check for Admin Theme Override
                     if (session.isAdmin) {
                         applyAdminTheme();
                     } else {
-                        // Standard Premium UI
                         document.getElementById('system-status-text').innerText = "Status: VIP Access Active";
                         document.getElementById('system-status-text').classList.add('text-amber-400');
                         document.getElementById('system-status-dot').classList.remove('bg-green-500');
                         document.getElementById('system-status-dot').classList.add('bg-amber-500');
                     }
-                    
-                    // Show Badge
                     document.getElementById('vip-status-badge').classList.remove('hidden');
                 }
 
@@ -1047,7 +976,6 @@
         }
         
         function applyAdminTheme() {
-            // Change Badge
             const badge = document.querySelector('.vip-badge');
             if(badge) {
                 badge.innerText = "SYSTEM ADMIN";
@@ -1055,8 +983,6 @@
                 badge.style.webkitBackgroundClip = "text";
                 badge.style.textShadow = "0 0 20px rgba(239, 68, 68, 0.5)";
             }
-
-            // Change Status Dot
             const dot = document.getElementById('system-status-dot');
             if(dot) {
                 dot.classList.remove('bg-amber-500', 'bg-green-500');
@@ -1068,8 +994,6 @@
                 statusText.classList.remove('text-amber-400');
                 statusText.classList.add('text-red-500');
             }
-
-            // Change Header Timer Dot
             const timerDot = document.getElementById('timer-dot');
             if(timerDot) {
                 timerDot.classList.remove('bg-amber-500');
@@ -1081,7 +1005,6 @@
             const timerEl = document.getElementById('header-timer');
             const dot = document.getElementById('timer-dot');
             
-            // STRICTER CHECK: Ensure isUnlimited is explicitly true
             if (isUnlimited === true && !isPreviewMode) {
                 timerEl.innerText = "LIFETIME ∞";
                 if (!document.querySelector('.vip-badge').innerText.includes("ADMIN")) {
@@ -1097,22 +1020,17 @@
             }
 
             if (countdownInterval) clearInterval(countdownInterval);
-
             updateTimer(); 
-
             countdownInterval = setInterval(updateTimer, 1000);
 
             function updateTimer() {
                 const now = Date.now();
-                // Safety check: if expiresAt is NaN or missing, force expire
                 if (!expiresAt || isNaN(expiresAt)) {
                     clearInterval(countdownInterval);
                     timerEl.innerText = "ERROR";
                     return;
                 }
-
                 const diff = expiresAt - now;
-
                 if (diff <= 0) {
                     clearInterval(countdownInterval);
                     timerEl.innerText = "SESSION EXPIRED";
@@ -1120,33 +1038,23 @@
                     setTimeout(() => window.location.reload(), 1000);
                     return;
                 }
-
                 const h = Math.floor(diff / 3600000);
                 const m = Math.floor((diff % 3600000) / 60000);
                 const s = Math.floor((diff % 60000) / 1000);
-
                 timerEl.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                
                 if (diff < 3600000) dot.style.backgroundColor = '#f87171';
             }
         }
         
-        // --- NEW: SESSION VERIFICATION POLLING ---
         function startSessionCheck(key) {
             if (sessionCheckInterval) clearInterval(sessionCheckInterval);
-            
-            // Check every 30 seconds
             sessionCheckInterval = setInterval(async () => {
                 if(isPreviewMode) return;
-                
                 const deviceId = getDeviceId();
                 try {
                     const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}&action=verify`);
                     const data = await response.json();
-                    
-                    // Handle explicit "valid: false"
                     if (data.valid === false) {
-                        console.warn("Session invalid:", data.message);
                         localStorage.removeItem('kivro_premium_session');
                         alert(data.message || "Key expired or session terminated");
                         window.location.reload();
@@ -1241,9 +1149,8 @@
 
         let activeGamesList = gamesList;
 
-        // --- APP LOGIC ---
         function init() {
-            renderGrid(activeGamesList); // Use active list
+            renderGrid(activeGamesList); 
             updateCount(activeGamesList.length);
             setupTabs();
             setupSearch();
@@ -1258,9 +1165,8 @@
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
                 card.className = "smooth-card group cursor-pointer animate-pop-in";
-                card.style.animationDelay = `${index * 50}ms`; // Staggered animation
+                card.style.animationDelay = `${index * 50}ms`;
 
-                // UPDATED: Now calls playGame() with Overlay
                 card.onclick = () => {
                     playGame(item.gameUrl, item.title);
                 };
@@ -1268,7 +1174,6 @@
                 card.innerHTML = `
                     <div class="h-36 sm:h-40 relative img-wrapper bg-black/50 m-2">
                         <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x250/111/444?text=NULL'">
-                        
                         <div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
                             <div class="status-dot"></div>
                             <span class="text-[10px] font-bold text-white/90 uppercase tracking-widest">Stable</span>
@@ -1293,7 +1198,6 @@
                 showToast("🔒 Premium Required to Copy");
                 return;
             }
-
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(BOOKMARKLET_CODE).then(() => {
                     showToast("Bookmarklet Copied!");
@@ -1327,7 +1231,6 @@
         function setupTabs() {
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.onclick = () => {
-                    // Check for Preview Mode restriction on Proxy and Menu
                     const target = btn.dataset.tab;
                     if (isPreviewMode && (target === 'Menu' || target === 'Proxy')) {
                         showToast("🔒 Premium Required");
@@ -1345,7 +1248,6 @@
                         return;
                     }
 
-                    // Handle View Switching
                     const grid = document.getElementById('game-grid');
                     const menuView = document.getElementById('menu-view');
                     const header = document.getElementById('dashboard-header');
@@ -1361,8 +1263,6 @@
                         header.classList.remove('hidden');
                         menuView.classList.add('hidden');
                         searchBar.classList.remove('opacity-0', 'pointer-events-none');
-                        
-                        // IMPORTANT: Pass current active list to filterGrid
                         filterGrid();
                     }
                     
@@ -1393,16 +1293,14 @@
 
         function filterGrid(term = '') {
             const s = term.toLowerCase();
-            
-            // Use activeGamesList instead of raw lists to respect Free Mode limits
             const all = isPreviewMode ? activeGamesList : [...gamesList, ...appsList];
             
             const filtered = all.filter(item => {
                 if(!item.title.toLowerCase().includes(s)) return false;
                 if(currentTab === 'Favs') return favorites.includes(item.id);
                 if(currentTab === 'Apps') return item.category === 'App';
-                if(currentTab === 'Menu') return false; // Handled by view switching
-                return item.category !== 'App'; // Default to Games
+                if(currentTab === 'Menu') return false; 
+                return item.category !== 'App'; 
             });
             renderGrid(filtered);
             updateCount(filtered.length);
@@ -1417,7 +1315,7 @@
             if(favorites.includes(id)) favorites = favorites.filter(x => x !== id);
             else favorites.push(id);
             localStorage.setItem('kivro_favs', JSON.stringify(favorites));
-            filterGrid(); // Re-render to show correct fav status
+            filterGrid(); 
         };
 
         document.getElementById('site-key-input').addEventListener('keypress', (e) => {
