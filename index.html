@@ -275,6 +275,29 @@
         </div>
     </div>
 
+    <!-- GAME PLAYER OVERLAY (THE FIX) -->
+    <div id="game-player-overlay" class="fixed inset-0 z-[15000] bg-black flex flex-col transition-opacity duration-300 opacity-0 pointer-events-none">
+        <!-- Toolbar -->
+        <div class="h-14 bg-zinc-900/90 backdrop-blur border-b border-white/10 flex items-center justify-between px-6">
+            <button onclick="closeGame()" class="group flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+                <div class="w-8 h-8 rounded-full bg-white/5 group-hover:bg-white/10 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                </div>
+                <span class="text-xs font-bold uppercase tracking-widest hidden sm:inline">Back to Library</span>
+            </button>
+            
+            <span id="active-game-title" class="text-zinc-500 text-xs font-bold uppercase tracking-widest truncate max-w-[200px]">Running Protocol</span>
+            
+            <button onclick="toggleFullscreen()" class="group w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+            </button>
+        </div>
+        <!-- Iframe Container -->
+        <div class="flex-1 relative bg-black w-full h-full overflow-hidden">
+            <iframe id="game-frame" class="w-full h-full border-0" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"></iframe>
+        </div>
+    </div>
+
     <!-- SITE LOCK (With Sneaky CRT Intro Animation) -->
     <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center overflow-y-auto overflow-x-hidden transition-all duration-700 opacity-0 animate-crt-on">
         <!-- Background Effects -->
@@ -387,12 +410,12 @@
                             <div class="flex items-center justify-between relative z-10">
                                 <div class="flex items-center gap-3">
                                      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg text-white">
-                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                                    </div>
-                                    <div>
-                                        <div class="text-sm font-bold text-white">2 Weeks Elite</div>
-                                        <div class="text-[9px] text-amber-200/80 font-medium">Full Priority Access</div>
-                                    </div>
+                                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                                     </div>
+                                     <div>
+                                         <div class="text-sm font-bold text-white">2 Weeks Elite</div>
+                                         <div class="text-[9px] text-amber-200/80 font-medium">Full Priority Access</div>
+                                     </div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-lg font-extrabold text-white text-shadow-sm">12€</div>
@@ -542,11 +565,11 @@
                                 <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
                                      <div class="w-10 h-10 flex-shrink-0 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                    </div>
-                                    <div class="text-left overflow-hidden">
+                                     </div>
+                                     <div class="text-left overflow-hidden">
                                         <p class="text-xs font-bold text-zinc-500 uppercase">Contact</p>
                                         <p class="text-white font-bold select-all truncate">kayazissigma@gmail.com</p>
-                                    </div>
+                                     </div>
                                 </div>
                             </div>
                             
@@ -693,6 +716,62 @@
         let countdownInterval = null;
         let isPreviewMode = false;
         let sessionCheckInterval = null; // POLLING CHECK
+
+        // --- GAME PLAYER OVERLAY LOGIC ---
+        function playGame(url, title) {
+            // Check for Preview Mode restriction
+            if (isPreviewMode) {
+                showToast("🔒 Premium Required to Play");
+                document.getElementById('free-mode-cta').scrollIntoView({behavior: 'smooth', block: 'center'});
+                return;
+            }
+
+            const overlay = document.getElementById('game-player-overlay');
+            const frame = document.getElementById('game-frame');
+            const titleEl = document.getElementById('active-game-title');
+            
+            // Set source and title
+            frame.src = url;
+            titleEl.innerText = title || "Running Protocol";
+            
+            // Show overlay
+            overlay.classList.remove('hidden', 'pointer-events-none');
+            // Small delay for fade in
+            setTimeout(() => overlay.classList.remove('opacity-0'), 50);
+            
+            // Lock body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGame() {
+            const overlay = document.getElementById('game-player-overlay');
+            const frame = document.getElementById('game-frame');
+            
+            // Hide overlay
+            overlay.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                overlay.classList.add('hidden', 'pointer-events-none');
+                // Clear source to stop game/audio
+                frame.src = 'about:blank';
+                // Unlock body scroll
+                if (!document.getElementById('site-lock').style.display || document.getElementById('site-lock').style.display === 'none') {
+                     document.body.style.overflow = '';
+                }
+            }, 300);
+        }
+
+        function toggleFullscreen() {
+            const frame = document.getElementById('game-frame');
+            if (frame.requestFullscreen) {
+                frame.requestFullscreen();
+            } else if (frame.webkitRequestFullscreen) { /* Safari */
+                frame.webkitRequestFullscreen();
+            } else if (frame.msRequestFullscreen) { /* IE11 */
+                frame.msRequestFullscreen();
+            }
+        }
+
 
         // --- CLOAKING LOGIC ---
         function openCloakModal() {
@@ -1181,14 +1260,9 @@
                 card.className = "smooth-card group cursor-pointer animate-pop-in";
                 card.style.animationDelay = `${index * 50}ms`; // Staggered animation
 
-                // GUARDED ONCLICK
+                // UPDATED: Now calls playGame() with Overlay
                 card.onclick = () => {
-                    if (isPreviewMode) {
-                        showToast("🔒 Premium Required to Play");
-                        document.getElementById('free-mode-cta').scrollIntoView({behavior: 'smooth', block: 'center'});
-                        return;
-                    }
-                    window.open(item.gameUrl, '_blank');
+                    playGame(item.gameUrl, item.title);
                 };
 
                 card.innerHTML = `
@@ -1214,7 +1288,6 @@
             });
         }
 
-        // ... existing helper functions (copyBookmarklet, fallbackCopy, showToast) ...
         function copyBookmarklet() {
             if (isPreviewMode) {
                 showToast("🔒 Premium Required to Copy");
@@ -1345,40 +1418,6 @@
             else favorites.push(id);
             localStorage.setItem('kivro_favs', JSON.stringify(favorites));
             filterGrid(); // Re-render to show correct fav status
-        };
-
-        // --- SESSION RESUME ---
-        window.onload = () => {
-             // 1. Session Resume Logic
-             localStorage.removeItem('kivro_preview_session');
-             const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
-             if (session) {
-                 if (!session.isUnlimited && session.expiresAt < Date.now()) {
-                     localStorage.removeItem('kivro_premium_session');
-                 } else {
-                     showVipWelcome(session);
-                 }
-             }
-
-             // 2. Install Logic
-             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-             
-             if (!isStandalone && !localStorage.getItem('kivro_install_dismissed')) {
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                
-                setTimeout(() => {
-                    const installModal = document.getElementById('install-modal');
-                    installModal.classList.remove('translate-y-full');
-                    
-                    if (isIOS) {
-                        document.getElementById('ios-instructions').classList.remove('hidden');
-                    } else if (deferredPrompt) {
-                        document.getElementById('install-btn').classList.remove('hidden');
-                    } else {
-                        document.getElementById('manual-install').classList.remove('hidden');
-                    }
-                }, 2000); 
-             }
         };
 
         document.getElementById('site-key-input').addEventListener('keypress', (e) => {
